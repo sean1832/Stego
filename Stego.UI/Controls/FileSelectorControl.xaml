@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="Stego.UI.Controls.FileSelectorControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Stego.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Border
+        Background="{ThemeResource ControlFillColorTertiaryBrush}"
+        CornerRadius="8"
+        Padding="4"
+    >
+        <Grid>
+            <Image x:Name="CoverImage" Stretch="Uniform" Visibility="Collapsed"/>
+            <StackPanel x:Name="GeneralFile" VerticalAlignment="Center" Spacing="8">
+                <FontIcon x:Name="GeneralFileIcon" FontSize="128" Glyph="&#xE729;"/>
+                <TextBlock x:Name="GeneralFileName" Text="File Path" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="GeneralFileSize" HorizontalAlignment="Center"/>
+            </StackPanel>
+            
+            
+            <Button 
+                x:Name="FileSelectionButton" 
+                Content="Select File" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Click="OnSelectFileClicked"/>
+
+            <StackPanel 
+                x:Name="FileActionPanel"
+                Orientation="Horizontal" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top" 
+                Margin="12"
+                Visibility="Collapsed"
+                Spacing="8">
+
+                <Button Click="OnRemoveFileClicked">
+                    <FontIcon Glyph="&#xE894;" FontSize="12" />
+                </Button>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</UserControl>

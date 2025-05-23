@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="Stego.UI.Controls.EncryptionParameterControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Stego.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="using:System"
+    mc:Ignorable="d">
+
+    <Grid RowSpacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" RowSpacing="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="KDF:" Style="{StaticResource SubtitleTextBlockStyle}"/>
+            <local:Argon2ParameterControl Grid.Row="1"/>
+
+            <TextBlock Grid.Row="2" Text="Steganography:" Style="{StaticResource SubtitleTextBlockStyle}"/>
+            <local:FileSelectorControl
+                Grid.Row="3"
+                SelectedFilePath="{x:Bind _vm.SteganographyViewModel.CoverImagePath, Mode=TwoWay}"
+                FileTypes=".png,.bmp"/>
+            <local:SteganographyLsbControl Grid.Row="4"
+                                           LsbCount="{x:Bind _vm.SteganographyViewModel.LsbCount, Mode=TwoWay}"/>
+            <Slider 
+                Grid.Row="5" 
+                Header="Spacing"
+                Minimum="1" 
+                Maximum="30" 
+                StepFrequency="5" 
+                Value="{x:Bind _vm.SteganographyViewModel.Spacing, Mode=TwoWay}"/>
+        </Grid>
+
+        <Button 
+            Grid.Row="1" 
+            Content="Encrypt" 
+            VerticalAlignment="Bottom" 
+            HorizontalAlignment="Stretch" 
+            Click="ShowPasswordDialogClick"/>
+
+    </Grid>
+</UserControl>

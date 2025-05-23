@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Stego.UI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Stego.UI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

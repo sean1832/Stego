@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="Stego.UI.Controls.DecryptionInputControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Stego.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Margin="20" RowSpacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Decryption" Style="{StaticResource TitleTextBlockStyle}"/>
+        <ComboBox x:Name="InputTypeComboBox" Grid.Row="1" SelectedIndex="0">
+            <x:String>String</x:String>
+            <x:String>File</x:String>
+        </ComboBox>
+        <RichEditBox x:Name="RichTextBox" Grid.Row="2"/>
+        <local:FileSelectorControl x:Name="FileSelector" Grid.Row="2"/>
+
+        <InfoBar
+            Grid.Row="3"
+            IsOpen="True"
+            Message="Current version is in beta and things might break. If you encounter any bug, please don't hesitate to submit an issue on GitHub." >
+            <InfoBar.ActionButton>
+                <HyperlinkButton Content="GitHub Issue Page" NavigateUri="https://github.com/sean1832/stego" />
+            </InfoBar.ActionButton>
+        </InfoBar>
+    </Grid>
+</UserControl>

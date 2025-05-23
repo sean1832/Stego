@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="Stego.UI.Controls.Argon2ParameterControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Stego.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Spacing="8">
+        <Slider x:Name="Argon2CostSlider" Header="Argon2Cost" Minimum="1" Maximum="10" 
+                Value="{Binding  Argon2Cost, Mode=TwoWay}">
+            <ToolTipService.ToolTip>
+                <ToolTip Content="This is a tooltip"/>
+            </ToolTipService.ToolTip>
+        </Slider>
+        <Slider x:Name="Argon2MemorySlider" Header="Argon2Memory (MB)" Minimum="512" Maximum="8192" StepFrequency="512" 
+                Value="{Binding Argon2Memory, Mode=TwoWay}" />
+    </StackPanel>
+</UserControl>
