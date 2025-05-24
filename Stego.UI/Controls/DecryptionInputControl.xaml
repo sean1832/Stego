@@ -17,6 +17,21 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="Decryption" Style="{StaticResource TitleTextBlockStyle}"/>
+        <!-- Status -->
+        <TeachingTip Grid.Row="0" 
+                     x:Name="StatusBox"
+                     IsOpen="{x:Bind _vm.IsOutputSuccess, Mode=TwoWay}"
+                     Subtitle="{x:Bind _vm.OutputMessage, Mode=OneWay}" 
+                     ActionButtonContent="Open Directory"
+                     ActionButtonClick="StatusBox_OnActionButtonClick"
+                     CloseButtonContent="Close"
+                     IsLightDismissEnabled="True"
+                     PreferredPlacement="Bottom">
+            <TeachingTip.IconSource>
+                <FontIconSource Glyph="&#xEC61;"/>
+            </TeachingTip.IconSource>
+        </TeachingTip>
+
         <ComboBox x:Name="InputTypeComboBox" Grid.Row="1" SelectedIndex="0">
             <x:String>String</x:String>
             <x:String>File</x:String>

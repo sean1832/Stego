@@ -126,5 +126,30 @@ namespace Stego.UI.Controls
                 return null;
             }
         }
+
+        private void StatusBox_OnActionButtonClick(TeachingTip sender, object args)
+        {
+            if (_vm == null) return;
+
+            // open directory
+            string path = _vm.OutputFilePath;
+
+            if (string.IsNullOrEmpty(path)) return;
+
+            // open the directory in file explorer
+            string? directoryPath = System.IO.Path.GetDirectoryName(path);
+            if (directoryPath != null)
+            {
+                // Use the appropriate method to open the directory in file explorer
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "explorer.exe",
+                    Arguments = directoryPath,
+                    UseShellExecute = true
+                });
+            }
+
+            StatusBox.IsOpen = false;
+        }
     }
 }
