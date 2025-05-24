@@ -168,7 +168,6 @@ namespace Stego.UI.Controls
             {
                 FileTypeChoices =
                 {
-                    { "Stego GenericFile Format", [".stg"] },
                     { "Generic Binary", [".bin"] },
                     { "Plaintext", [".txt"] },
                     { "Portable Document Format", [".pdf"]},
