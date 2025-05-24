@@ -75,7 +75,7 @@ namespace Stego.UI.Controls
 
             _vm.InputType = InputDataType.String;
             _vm.Data = data;
-            DataSizeTextBlock.Text = $"{data.Length} bytes";
+            DataSizeTextBlock.Text = $"{DataPacker.PredictTotalBytes(_vm.Data)} bytes";
         }
 
         private static byte[]? GetInputBoxBytes(RichEditBox textBox)
@@ -99,7 +99,6 @@ namespace Stego.UI.Controls
                 if (data == null) return;
 
                 _vm.Data = Compression.CompressGz(data);
-                DataSizeTextBlock.Text = $"{_vm.Data.Length} bytes";
             }
             else
             {
@@ -109,8 +108,9 @@ namespace Stego.UI.Controls
                 if (data == null) return;
 
                 _vm.Data = data;
-                DataSizeTextBlock.Text = $"{_vm.Data.Length} bytes";
             }
+
+            DataSizeTextBlock.Text = $"{DataPacker.PredictTotalBytes(_vm.Data)} bytes";
         }
 
         private void StatusBox_OnActionButtonClick(TeachingTip sender, object args)
