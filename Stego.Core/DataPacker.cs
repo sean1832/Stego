@@ -40,7 +40,7 @@ public static class DataPacker
         return result;
     }
 
-    public static Dictionary<string, object> UnpackAll(ReadOnlySpan<byte> data)
+    public static EncryptionEnvelope UnpackAll(ReadOnlySpan<byte> data)
     {
         const int saltLength = 16;
         const int nonceLength = 12;
@@ -71,14 +71,14 @@ public static class DataPacker
 
         byte[] encryptedData = data.Slice(offset).ToArray();
 
-        return new Dictionary<string, object>
+        return new EncryptionEnvelope()
         {
-            ["saltByte"] = salt,
-            ["nonceByte"] = nonce,
-            ["parallelismInt"] = parallelism,
-            ["memorySizeLong"] = memorySize,
-            ["passesLong"] = passes,
-            ["encryptedByte"] = encryptedData
+            Salt = salt,
+            Nonce = nonce,
+            MemorySize = memorySize,
+            Iterations = passes,
+            Parallelism = parallelism,
+            EncryptedData = encryptedData
         };
     }
 
