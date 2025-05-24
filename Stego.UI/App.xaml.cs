@@ -15,6 +15,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Stego.UI.Helpers;
 using Stego.UI.View;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -36,6 +37,13 @@ namespace Stego.UI
         public App()
         {
             InitializeComponent();
+            UnhandledException += App_UnhandledException;
+        }
+
+        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            MessageBox.Error($"Unhandled Error: {e.Message}", "Fatal");
         }
 
         /// <summary>
