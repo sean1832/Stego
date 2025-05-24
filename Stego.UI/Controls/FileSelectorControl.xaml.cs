@@ -1,25 +1,14 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Microsoft.UI.Xaml.Markup;
 using WinRT.Interop;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace Stego.UI.Controls
 {
@@ -47,6 +36,7 @@ namespace Stego.UI.Controls
             get => (string?)GetValue(SelectedFilePathProperty);
             set => SetValue(SelectedFilePathProperty, value);
         }
+        public event EventHandler<string?>? SelectedFilePathChanged;
 
         private static void OnSelectedFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -60,6 +50,7 @@ namespace Stego.UI.Controls
                 control.FileSelectionButton.Visibility = Visibility.Visible;
                 control.FileActionPanel.Visibility = Visibility.Collapsed;
             }
+            control.SelectedFilePathChanged?.Invoke(control, (string?)e.NewValue);
         }
 
         private async void OnSelectFileClicked(object sender, RoutedEventArgs e)

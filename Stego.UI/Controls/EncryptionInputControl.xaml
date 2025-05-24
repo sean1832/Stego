@@ -76,9 +76,10 @@
         </Grid>
 
         <!-- File input panel (hidden by default) -->
-        <local:FileSelectorControl x:Name="FileSelectorComboBox"
+        <local:FileSelectorControl x:Name="FileSelectorControl"
                                    Grid.Row="2"
                                    Visibility="Collapsed"
+                                   SelectedFilePathChanged="FileSelectorControl_OnSelectedFilePathChanged"
                                    />
 
         <!-- Info bar -->

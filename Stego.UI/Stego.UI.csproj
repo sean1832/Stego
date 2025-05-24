@@ -18,7 +18,6 @@
     <None Remove="Controls\DecryptionParameterControl.xaml" />
     <None Remove="Controls\EncryptionInputControl.xaml" />
     <None Remove="Controls\FileSelectorControl.xaml" />
-    <None Remove="Controls\ImageSelectorControl.xaml" />
     <None Remove="Controls\OutputPromptContent.xaml" />
     <None Remove="Page\DecryptionPage.xaml" />
     <None Remove="Page\EncryptionPage.xaml" />
@@ -117,11 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\SteganographyLsbControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Controls\ImageSelectorControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

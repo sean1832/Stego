@@ -50,6 +50,7 @@ namespace Stego.UI.ViewModel
             }
         }
 
+
         // Input type (string or file)
         private InputDataType _inputType = InputDataType.String;
         public InputDataType InputType

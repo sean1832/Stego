@@ -82,7 +82,7 @@ public static class DataPacker
         };
     }
 
-    public static int PredictTotalBytes(byte[] data)
+    public static long PredictTotalBytes(byte[] data)
     {
         const int saltLength = 16;
         const int nonceLength = 12;

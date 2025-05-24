@@ -7,7 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Stego.UI.Controls"
+    xmlns:viewModel="using:Stego.UI.ViewModel"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <viewModel:DecryptionPageViewModel x:Key="Vm"/>
+    </Page.Resources>
 
     <SplitView 
         x:Name="SplitViewPane"
@@ -23,10 +28,10 @@
                 Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
                 Padding="12"
             >
-                <controls:DecryptionParameterControl/>
+                <controls:DecryptionParameterControl DataContext="{StaticResource Vm}"/>
             </Border>
         </SplitView.Pane>
 
-        <controls:DecryptionInputControl/>
+        <controls:DecryptionInputControl DataContext="{StaticResource Vm}"/>
     </SplitView>
 </Page>

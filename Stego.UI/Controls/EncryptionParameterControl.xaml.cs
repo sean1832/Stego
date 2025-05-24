@@ -58,6 +58,13 @@ public sealed partial class EncryptionParameterControl : UserControl
             dialog.PrimaryButtonText = "Encrypt As Image";
             dialog.PrimaryButtonClick += async (s, args) => await HandleEncryptClickAsync(dialog, prompt, args, SaveSteganographyFile);
         }
+        else if (_vm.InputType == InputDataType.File && (_vm.Data != null) && (_vm.Data.Length >= 524288)) 
+        {
+            // if size larger than 0.5MB &&
+            // if input type is file, swap primary button to "Encrypt As File", disable secondary button
+            dialog.PrimaryButtonText = "Encrypt As File";
+            dialog.PrimaryButtonClick += async (s, args) => await HandleEncryptClickAsync(dialog, prompt, args, SaveEncryptedFile);
+        }
         else
         {
             dialog.PrimaryButtonText = "Encrypt Base64";

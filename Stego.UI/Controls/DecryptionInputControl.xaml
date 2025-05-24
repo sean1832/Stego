@@ -22,7 +22,7 @@
             <x:String>File</x:String>
         </ComboBox>
         <RichEditBox x:Name="RichTextBox" Grid.Row="2"/>
-        <local:FileSelectorControl x:Name="FileSelector" Grid.Row="2"/>
+        <local:FileSelectorControl x:Name="FileSelector" Grid.Row="2" SelectedFilePathChanged="FileSelector_OnSelectedFilePathChanged"/>
 
         <InfoBar
             Grid.Row="3"

@@ -22,7 +22,7 @@ namespace Stego.UI.Controls
 
             InputTypeComboBox.SelectionChanged += InputTypeComboBox_OnSelectionChanged;
             TextInputPanel.Visibility = Visibility.Visible;
-            FileSelectorComboBox.Visibility = Visibility.Collapsed;
+            FileSelectorControl.Visibility = Visibility.Collapsed;
 
             this.DataContextChanged += OnDataContextChanged;
         }
@@ -37,12 +37,14 @@ namespace Stego.UI.Controls
             switch (InputTypeComboBox.SelectedItem)
             {
                 case "String":
+                    _vm.InputType = InputDataType.String;
                     TextInputPanel.Visibility = Visibility.Visible;
-                    FileSelectorComboBox.Visibility = Visibility.Collapsed;
+                    FileSelectorControl.Visibility = Visibility.Collapsed;
                     break;
                 case "File":
+                    _vm.InputType = InputDataType.File;
                     TextInputPanel.Visibility = Visibility.Collapsed;
-                    FileSelectorComboBox.Visibility = Visibility.Visible;
+                    FileSelectorControl.Visibility = Visibility.Visible;
                     break;
             }
         }
@@ -132,6 +134,18 @@ namespace Stego.UI.Controls
             }
 
             StatusBox.IsOpen = false;
+        }
+
+        private void FileSelectorControl_OnSelectedFilePathChanged(object? sender, string? e)
+        {
+            if (_vm == null) return;
+            if (string.IsNullOrEmpty(e))
+            {
+                _vm.Data = null;
+                return;
+            }
+            // read the file into a byte array
+            _vm.Data = System.IO.File.ReadAllBytes(e);
         }
     }
 }
