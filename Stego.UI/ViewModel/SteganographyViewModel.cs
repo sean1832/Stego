@@ -16,8 +16,8 @@ namespace Stego.UI.ViewModel
             get => _coverImagePath;
             set { if (_coverImagePath == value) return; _coverImagePath = value; OnPropertyChanged(); }
         }
-        private int _lsbCount;
-        public int LsbCount
+        private short _lsbCount;
+        public short LsbCount
         {
             get => _lsbCount;
             set { if (_lsbCount == value) return; _lsbCount = value; OnPropertyChanged(); }
