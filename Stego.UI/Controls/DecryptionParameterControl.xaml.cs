@@ -169,11 +169,11 @@ namespace Stego.UI.Controls
             var opts = new FileSelectorSaveOptions
             {
                 FileTypeChoices = {
-                    { "Generic Binary", [".bin"] },
                     { "Plaintext", [".txt"] },
                     { "PDF", [".pdf"] },
                     { "Zip archive", [".zip"] },
                     { "7z archive", [".7z"] },
+                    { "Generic Binary", [".bin"] },
                 }
             };
 
