@@ -11,7 +11,20 @@ namespace Stego.Core
             {
                 gzipStream.Write(data, 0, data.Length);
             }
+
             return memoryStream.ToArray();
+        }
+
+        public static byte[] DecompressGz(byte[] compressedData)
+        {
+            using MemoryStream inputStream = new(compressedData);
+            using MemoryStream outputStream = new();
+            using (GZipStream gzipStream = new(inputStream, CompressionMode.Decompress))
+            {
+                gzipStream.CopyTo(outputStream);
+            }
+
+            return outputStream.ToArray();
         }
     }
 }
