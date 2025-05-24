@@ -81,9 +81,9 @@ namespace Stego.Core
             image.Encode(SKEncodedImageFormat.Png, 100).SaveTo(outputStream);
         }
 
-        public static Task EncodeAsync(byte[] message, string coverFilePath, string outputPath, int spacing)
+        public static async Task EncodeAsync(byte[] message, string coverFilePath, string outputPath, int spacing)
         {
-            return Task.Run(() => Encode(message, coverFilePath, outputPath, spacing));
+            await Task.Run(() => Encode(message, coverFilePath, outputPath, spacing));
         }
 
         /// <summary>
@@ -150,9 +150,9 @@ namespace Stego.Core
             return FromBits(payloadBits);
         }
 
-        public static Task<byte[]> DecodeAsync(string coverFilePath, int spacing)
+        public static async Task<byte[]> DecodeAsync(string coverFilePath, int spacing)
         {
-            return Task.Run(() => Decode(coverFilePath, spacing));
+            return await Task.Run(() => Decode(coverFilePath, spacing));
         }
 
         /// <summary>

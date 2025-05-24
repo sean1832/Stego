@@ -1,9 +1,10 @@
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Stego.Core;
 using Stego.UI.Helpers;
 using Stego.UI.ViewModel;
 using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
@@ -107,43 +108,43 @@ namespace Stego.UI.Controls
                 return;
             }
 
-            // decode steganography file if needed
-            if (isSteganographyFile)
+            try
             {
-                if (string.IsNullOrEmpty(_vm.InputFilePath))
+                // decode steganography if needed
+                if (isSteganographyFile)
                 {
-                    prompt.HideSpinner();
-                    prompt.ShowError("No input file path provided for steganography decoding.");
-                    return;
+                    data = await SteganographyLsb.DecodeAsync(_vm.InputFilePath, (int)SpacingSlider.Value);
                 }
 
-                data = await SteganographyLsb.DecodeAsync(_vm.InputFilePath, (int)SpacingSlider.Value);
-            }
+                if (data == null)
+                {
+                    throw new InvalidDataException("Decoded steganography data is null. Likely failed to decode.");
+                }
 
-            if (data == null)
+                // decrypt
+                var decrypted = await DecryptAsync(prompt.Password, data);
+                if (decrypted == null)
+                {
+                    throw new InvalidDataException("Decrypted data is null. Likely failed to decrypt.");
+                }
+                // gzip
+                if (Compression.IsCompressedGz(decrypted))
+                    decrypted = await Compression.DecompressGzAsync(decrypted);
+
+                dialog.Hide();
+                onSuccess(decrypted);
+            }
+            catch (Exception ex)
+            {
+                Fail();
+            }
+            return;
+
+            void Fail()
             {
                 prompt.HideSpinner();
-                prompt.ShowError("No data to decrypt. Please provide input data or select a file.");
-                return;
+                prompt.ShowError("Unable to process input. Please check your password or input data and try again.");
             }
-
-            // run decryption
-            byte[]? decryptedData = await DecryptAsync(prompt.Password, data);
-            if (decryptedData == null)
-            {
-                prompt.HideSpinner();
-                prompt.ShowError("Decryption failed. Please check your password and input data.");
-                return;
-            }
-            // try de-compress if needed
-            if (Compression.IsCompressedGz(decryptedData))
-            {
-                decryptedData = await Compression.DecompressGzAsync(decryptedData);
-            }
-
-            // done
-            dialog.Hide();
-            onSuccess(decryptedData);
         }
 
         private async void ShowTextOutputDialog(byte[] decryptedData)
