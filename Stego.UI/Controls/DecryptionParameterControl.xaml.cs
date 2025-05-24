@@ -120,26 +120,30 @@ namespace Stego.UI.Controls
                 data = await SteganographyLsb.DecodeAsync(_vm.InputFilePath, (int)SpacingSlider.Value);
             }
 
-            // run decryption
-            if (data != null)
-            {
-                byte[]? decryptedData = await DecryptAsync(prompt.Password, data);
-                if (decryptedData == null)
-                {
-                    prompt.HideSpinner();
-                    prompt.ShowError("Decryption failed. Please check your password and input data.");
-                    return;
-                }
-
-                // done
-                dialog.Hide();
-                onSuccess(decryptedData);
-            }
-            else
+            if (data == null)
             {
                 prompt.HideSpinner();
                 prompt.ShowError("No data to decrypt. Please provide input data or select a file.");
+                return;
             }
+
+            // run decryption
+            byte[]? decryptedData = await DecryptAsync(prompt.Password, data);
+            if (decryptedData == null)
+            {
+                prompt.HideSpinner();
+                prompt.ShowError("Decryption failed. Please check your password and input data.");
+                return;
+            }
+            // try de-compress if needed
+            if (Compression.IsCompressedGz(decryptedData))
+            {
+                decryptedData = await Compression.DecompressGzAsync(decryptedData);
+            }
+
+            // done
+            dialog.Hide();
+            onSuccess(decryptedData);
         }
 
         private async void ShowTextOutputDialog(byte[] decryptedData)

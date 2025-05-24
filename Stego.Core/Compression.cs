@@ -15,6 +15,11 @@ namespace Stego.Core
             return memoryStream.ToArray();
         }
 
+        public static Task<byte[]> CompressGzAsync(byte[] data)
+        {
+            return Task.Run(() => CompressGz(data));
+        }
+
         public static byte[] DecompressGz(byte[] compressedData)
         {
             using MemoryStream inputStream = new(compressedData);
@@ -25,6 +30,17 @@ namespace Stego.Core
             }
 
             return outputStream.ToArray();
+        }
+
+        public static Task<byte[]> DecompressGzAsync(byte[] compressedData)
+        {
+            return Task.Run(() => DecompressGz(compressedData));
+        }
+
+        public static bool IsCompressedGz(byte[] data)
+        {
+            // Check for GZIP magic number (0x1F, 0x8B)
+            return data.Length >= 2 && data[0] == 0x1F && data[1] == 0x8B;
         }
     }
 }
