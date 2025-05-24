@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace Stego.UI.Controls
 {
@@ -232,6 +233,11 @@ namespace Stego.UI.Controls
                 MessageBox.Error($"Decryption Failed: {ex.Message}");
                 return null;
             }
+        }
+
+        private void SpacingSlider_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            SpacingSlider.Header = $"Spacing {SpacingSlider.Value}";
         }
     }
 }

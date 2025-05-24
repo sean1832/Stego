@@ -24,5 +24,15 @@ namespace Stego.UI.Controls
         {
             InitializeComponent();
         }
+
+        private void Argon2CostSlider_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            Argon2CostSlider.Header = $"Cost {Argon2CostSlider.Value}";
+        }
+
+        private void Argon2MemorySlider_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            Argon2MemorySlider.Header = $"Memory(KB) {Argon2MemorySlider.Value}";
+        }
     }
 }

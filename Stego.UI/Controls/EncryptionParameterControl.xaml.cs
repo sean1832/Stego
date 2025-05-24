@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Networking.XboxLive;
 using Windows.Storage;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace Stego.UI.Controls;
 
@@ -257,6 +258,11 @@ public sealed partial class EncryptionParameterControl : UserControl
         // run the slow work off the UI thread
         byte[] pwBytes = Encoding.UTF8.GetBytes(password);
         return await Cipher.EncryptAes256GcmAsync(pwBytes, data, Argon2Param);
+    }
+
+    private void SpacingSlider_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+    {
+        SpacingSlider.Header = $"Spacing {SpacingSlider.Value}";
     }
 }
 

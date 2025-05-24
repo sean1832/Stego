@@ -23,10 +23,10 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="KDF:" Style="{StaticResource SubtitleTextBlockStyle}"/>
+            <TextBlock Grid.Row="0" Text="KDF" Style="{StaticResource SubtitleTextBlockStyle}"/>
             <local:Argon2ParameterControl Grid.Row="1"/>
 
-            <TextBlock Grid.Row="2" Text="Steganography:" Style="{StaticResource SubtitleTextBlockStyle}"/>
+            <TextBlock Grid.Row="2" Text="Steganography" Style="{StaticResource SubtitleTextBlockStyle}"/>
             <local:FileSelectorControl
                 Grid.Row="3"
                 SelectedFilePath="{x:Bind _vm.SteganographyViewModel.CoverImagePath, Mode=TwoWay}"
@@ -35,11 +35,13 @@
                                            LsbCount="{x:Bind _vm.SteganographyViewModel.LsbCount, Mode=TwoWay}"/>
             <Slider 
                 Grid.Row="5" 
+                x:Name="SpacingSlider"
                 Header="Spacing"
                 Minimum="1" 
                 Maximum="30" 
-                StepFrequency="5" 
-                Value="{x:Bind _vm.SteganographyViewModel.Spacing, Mode=TwoWay}"/>
+                StepFrequency="2" 
+                Value="{x:Bind _vm.SteganographyViewModel.Spacing, Mode=TwoWay}"
+                ValueChanged="SpacingSlider_OnValueChanged"/>
         </Grid>
 
         <Button 

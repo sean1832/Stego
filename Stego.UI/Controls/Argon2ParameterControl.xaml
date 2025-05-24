@@ -10,12 +10,14 @@
 
     <StackPanel Spacing="8">
         <Slider x:Name="Argon2CostSlider" Header="Argon2Cost" Minimum="1" Maximum="10" 
-                Value="{Binding  Argon2Cost, Mode=TwoWay}">
+                Value="{Binding  Argon2Cost, Mode=TwoWay}"
+                ValueChanged="Argon2CostSlider_OnValueChanged">
             <ToolTipService.ToolTip>
                 <ToolTip Content="This is a tooltip"/>
             </ToolTipService.ToolTip>
         </Slider>
         <Slider x:Name="Argon2MemorySlider" Header="Argon2Memory (MB)" Minimum="512" Maximum="8192" StepFrequency="512" 
-                Value="{Binding Argon2Memory, Mode=TwoWay}" />
+                Value="{Binding Argon2Memory, Mode=TwoWay}"
+                ValueChanged="Argon2MemorySlider_OnValueChanged"/>
     </StackPanel>
 </UserControl>
