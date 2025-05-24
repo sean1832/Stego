@@ -64,7 +64,7 @@ public sealed partial class SteganographyLsbControl : UserControl
     {
         // Brushes from your resources
         Brush onBrush = (Brush)Resources["SystemControlHighlightAccentBrush"];
-        Brush offBrush = (Brush)Application.Current.Resources["ControlFillColorDisabledBrush"];
+        Brush offBrush = (Brush)Application.Current.Resources["SubtleFillColorSecondaryBrush"];
 
         for (int i = 0; i < _cells.Length; i++)
         {

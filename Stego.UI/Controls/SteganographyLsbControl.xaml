@@ -30,43 +30,43 @@
             <Border 
                 Grid.Column="1"
                 x:Name="CellSeven" 
-                Background="{StaticResource ControlFillColorTertiaryBrush}" 
+                Background="{StaticResource SubtleFillColorSecondaryBrush}" 
                 Height="20" Width="20"
                 CornerRadius="8"/>
             <Border 
                 Grid.Column="2"
                 x:Name="CellSix" 
-                Background="{StaticResource ControlFillColorTertiaryBrush}" 
+                Background="{StaticResource SubtleFillColorSecondaryBrush}" 
                 Height="20" Width="20"
                 CornerRadius="8"/>
             <Border 
                 Grid.Column="3"
                 x:Name="CellFive" 
-                Background="{StaticResource ControlFillColorTertiaryBrush}" 
+                Background="{StaticResource SubtleFillColorSecondaryBrush}" 
                 Height="20" Width="20"
                 CornerRadius="8"/>
             <Border 
                 Grid.Column="4"
                 x:Name="CellFour" 
-                Background="{StaticResource ControlFillColorTertiaryBrush}" 
+                Background="{StaticResource SubtleFillColorSecondaryBrush}" 
                 Height="20" Width="20"
                 CornerRadius="8"/>
             <Border 
                 Grid.Column="5"
                 x:Name="CellThree" 
-                Background="{StaticResource ControlFillColorTertiaryBrush}" 
+                Background="{StaticResource SubtleFillColorSecondaryBrush}" 
                 Height="20" Width="20"
                 CornerRadius="8"/>
             <Border 
                 Grid.Column="6"
                 x:Name="CellTwo" 
-                Background="{StaticResource ControlFillColorTertiaryBrush}" 
+                Background="{StaticResource SubtleFillColorSecondaryBrush}" 
                 Height="20" Width="20"
                 CornerRadius="8"/>
             <Border 
                 Grid.Column="7"
                 x:Name="CellOne" 
-                Background="{StaticResource ControlFillColorTertiaryBrush}" 
+                Background="{StaticResource SubtleFillColorSecondaryBrush}" 
                 Height="20" Width="20"
                 CornerRadius="8"/>
         </Grid>

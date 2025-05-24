@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Border
-        Background="{ThemeResource ControlFillColorTertiaryBrush}"
+        Background="{ThemeResource SubtleFillColorSecondaryBrush}"
         CornerRadius="8"
         Padding="4"
     >
