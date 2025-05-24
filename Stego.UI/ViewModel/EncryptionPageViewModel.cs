@@ -64,6 +64,18 @@ namespace Stego.UI.ViewModel
             }
         }
 
+        private string? _inputFilePath;
+        public string? InputFilePath
+        {
+            get => _inputFilePath;
+            set
+            {
+                if (_inputFilePath == value) return;
+                _inputFilePath = value;
+                OnPropertyChanged(nameof(InputFilePath));
+            }
+        }
+
         // Status
         private bool _isOutputSuccess;
         public bool IsOutputSuccess

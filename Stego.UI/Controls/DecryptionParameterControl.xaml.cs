@@ -29,9 +29,9 @@ namespace Stego.UI.Controls
             _vm = args.NewValue as DecryptionPageViewModel;
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private async void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            if (_vm == null || _vm.Data == null)
+            if (_vm == null)
                 return;
             var prompt = new PasswordPromptContent();
             var dialog = new ContentDialog
@@ -60,7 +60,7 @@ namespace Stego.UI.Controls
                     break;
                 case InputDataType.LosslessImage:
                     dialog.SecondaryButtonText = "Decrypt As File";
-                    dialog.SecondaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, true, SaveImageFile);
+                    dialog.SecondaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, true, SaveDecryptedFile);
                     break;
                 case InputDataType.JpegImage:
                     throw new NotImplementedException("Jpeg image is not currently supported");
@@ -71,6 +71,8 @@ namespace Stego.UI.Controls
                     dialog.SecondaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, false, SaveDecryptedFile);
                     break;
             }
+
+            await dialog.ShowAsync();
         }
 
 
@@ -119,6 +121,7 @@ namespace Stego.UI.Controls
                 if (decryptedData == null)
                 {
                     prompt.ShowError("Decryption failed. Please check your password and input data.");
+                    prompt
                     return;
                 }
 
@@ -156,31 +159,6 @@ namespace Stego.UI.Controls
             }
         }
 
-        private async void SaveImageFile(byte[] decryptedData)
-        {
-            var opts = new FileSelectorSaveOptions
-            {
-                FileTypeChoices =
-                {
-                    { "Portable Network Graphics", [".png"] },
-                    { "Bitmap", [".bmp"] }
-                }
-            };
-
-            (bool success, StorageFile? file) = await FileSelector.SaveAsync(opts, decryptedData);
-            if (!success || file == null)
-            {
-                _vm!.IsOutputSuccess = false;
-                _vm.OutputMessage = "Failed to save the file.";
-            }
-            else
-            {
-                _vm!.IsOutputSuccess = true;
-                _vm.OutputMessage = "File saved successfully.";
-                _vm.OutputFilePath = file.Path;
-            }
-        }
-
         private async void SaveDecryptedFile(byte[] decryptedData)
         {
             var opts = new FileSelectorSaveOptions
@@ -189,7 +167,10 @@ namespace Stego.UI.Controls
                 {
                     { "Stego GenericFile Format", [".stg"] },
                     { "Generic Binary", [".bin"] },
-                    { "Plaintext", [".txt"] }
+                    { "Plaintext", [".txt"] },
+                    { "Portable Document Format", [".pdf"]},
+                    {"Archive File", [".zip"]},
+                    {"7z Archived File", [".7z"]}
                 }
             };
 

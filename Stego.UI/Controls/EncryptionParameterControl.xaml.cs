@@ -5,6 +5,7 @@ using Stego.Core;
 using Stego.UI.Helpers;
 using Stego.UI.ViewModel;
 using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
@@ -99,7 +100,23 @@ public sealed partial class EncryptionParameterControl : UserControl
 
         // run encryption
         prompt.ShowSpinner();
-        byte[] data = await EncryptAsync(prompt.Password);
+        byte[] dataToEncrypt = _vm.Data;
+        if (_vm.InputType != InputDataType.String)
+        {
+            if (string.IsNullOrEmpty(_vm.InputFilePath))
+            {
+                prompt.ShowError("No input file selected. Please select a file to encrypt.");
+                return;
+            }
+            dataToEncrypt = await File.ReadAllBytesAsync(_vm.InputFilePath);
+        }
+
+        if (dataToEncrypt == null || dataToEncrypt.Length == 0)
+        {
+            prompt.ShowError("No data to encrypt. Please provide input data or select a file.");
+            return;
+        }
+        byte[] data = await EncryptAsync(prompt.Password, dataToEncrypt);
 
         // done
         dialog.Hide();
@@ -184,14 +201,14 @@ public sealed partial class EncryptionParameterControl : UserControl
         }
     }
 
-    private async Task<byte[]> EncryptAsync(string password)
+    private async Task<byte[]> EncryptAsync(string password, byte[] data)
     {
         // run the slow work off the UI thread
         byte[] pwBytes = Encoding.UTF8.GetBytes(password);
         return await Task.Run(() =>
             Cipher.EncryptAes256Gcm(
                 new ReadOnlySpan<byte>(pwBytes),
-                _vm.Data,
+                data,
                 Argon2Param
             )
         );

@@ -38,11 +38,13 @@ namespace Stego.UI.Controls
             {
                 case "String":
                     _vm.InputType = InputDataType.String;
+                    _vm.InputFilePath = null;
                     TextInputPanel.Visibility = Visibility.Visible;
                     FileSelectorControl.Visibility = Visibility.Collapsed;
                     break;
                 case "File":
                     _vm.InputType = InputDataType.GenericFile;
+                    _vm.Data = null;
                     TextInputPanel.Visibility = Visibility.Collapsed;
                     FileSelectorControl.Visibility = Visibility.Visible;
                     break;
@@ -142,10 +144,23 @@ namespace Stego.UI.Controls
             if (string.IsNullOrEmpty(e))
             {
                 _vm.Data = null;
+                _vm.InputFilePath = null;
                 return;
             }
-            // read the file into a byte array
-            _vm.Data = System.IO.File.ReadAllBytes(e);
+            // store in input file path
+            _vm.InputFilePath = e;
+            if (e.EndsWith(".png") || e.EndsWith(".bmp"))
+            {
+                _vm.InputType = InputDataType.LosslessImage;
+            }
+            else if (e.EndsWith(".jpg") || e.EndsWith(".jpeg"))
+            {
+                _vm.InputType = InputDataType.JpegImage;
+            }
+            else
+            {
+                _vm.InputType = InputDataType.GenericFile;
+            }
         }
     }
 }

@@ -76,6 +76,10 @@ namespace Stego.UI.Controls
                 {
                     _vm.InputType = InputDataType.JpegImage;
                 }
+                else
+                {
+                    _vm.InputType = InputDataType.GenericFile;
+                }
             }
             catch (Exception ex)
             {
