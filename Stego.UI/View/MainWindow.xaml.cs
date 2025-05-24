@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using Microsoft.UI.Xaml.Media.Animation;
+using Stego.UI.Controls;
 using Stego.UI.View;
 using WinRT.Interop;
 using AppWindow = Microsoft.UI.Windowing.AppWindow;
@@ -29,6 +30,8 @@ namespace Stego.UI.View
             SizeChanged += OnWindowSizeChanged;
             ContentFrame.Navigate(typeof(EncryptionPage));
             EncryptionNavigation.IsSelected = true;
+
+            SetTitleBar(CustomTitleBar);
         }
 
         private void InitializeWindowSize(Size windowSize, Size minWindowSize)

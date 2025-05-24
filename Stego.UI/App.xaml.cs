@@ -73,7 +73,9 @@ namespace Stego.UI
         {
             try
             {
+                MainWindow.ExtendsContentIntoTitleBar = true;
                 MainWindow.Activate();
+
             }
             catch (Exception ex)
             {
