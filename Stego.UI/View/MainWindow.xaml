@@ -8,13 +8,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Stego.UI.Controls"
     mc:Ignorable="d"
-    Title="Stego.UI">
+    Title="Stego">
 
     <Window.SystemBackdrop>
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid Margin="0,40,0,0">
+    <Grid Margin="0,10,0,0">
         <NavigationView x:Name="NavigationPanel"
                         PaneDisplayMode="Left"
                         IsPaneOpen="True"

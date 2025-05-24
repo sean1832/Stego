@@ -24,6 +24,7 @@ namespace Stego.UI.View
         {
             InitializeComponent();
             InitializeWindowSize(new Size(1100, 800), new Size(800, 600));
+            AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
 
             SizeChanged += OnWindowSizeChanged;
             ContentFrame.Navigate(typeof(EncryptionPage));
