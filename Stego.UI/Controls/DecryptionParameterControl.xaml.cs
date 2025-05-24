@@ -59,6 +59,8 @@ namespace Stego.UI.Controls
                     dialog.SecondaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args,false, SaveDecryptedFile);
                     break;
                 case InputDataType.LosslessImage:
+                    dialog.PrimaryButtonText = "Decrypt As String";
+                    dialog.PrimaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, true, ShowTextOutputDialog);
                     dialog.SecondaryButtonText = "Decrypt As File";
                     dialog.SecondaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, true, SaveDecryptedFile);
                     break;
@@ -166,17 +168,23 @@ namespace Stego.UI.Controls
         {
             var opts = new FileSelectorSaveOptions
             {
-                FileTypeChoices =
-                {
+                FileTypeChoices = {
                     { "Generic Binary", [".bin"] },
                     { "Plaintext", [".txt"] },
-                    { "Portable Document Format", [".pdf"]},
-                    {"Archive File", [".zip"]},
-                    {"7z Archived File", [".7z"]}
+                    { "PDF", [".pdf"] },
+                    { "Zip archive", [".zip"] },
+                    { "7z archive", [".7z"] },
                 }
             };
 
-            (bool success, StorageFile? file) = await FileSelector.SaveAsync(opts, decryptedData);
+            var (success, file) = await SpinnerDialogService
+                .ShowWhileAsync(
+                    host: this,
+                    title: "Saving file...",
+                    work: () => FileSelector.SaveAsync(opts, decryptedData)
+                );
+
+            // update VM
             if (!success || file == null)
             {
                 _vm!.IsOutputSuccess = false;

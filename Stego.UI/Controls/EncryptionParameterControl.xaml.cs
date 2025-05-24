@@ -133,16 +133,20 @@ public sealed partial class EncryptionParameterControl : UserControl
                 { "Bitmap", [".bmp"] }
             }
         };
-        
+
         StorageFile? file = await FileSelector.PickSaveFileAsync(opts);
         if (file == null)
             return;
 
-        SteganographyLsb.Encode(
-           encryptedData, 
-           _vm.SteganographyViewModel.CoverImagePath, 
-           file.Path, 
-           _vm.SteganographyViewModel.Spacing
+        await SpinnerDialogService.ShowWhileAsync(
+            host: this,
+            title: "Embedding data...",
+            work: () => SteganographyLsb.EncodeAsync(
+                message: encryptedData,
+                coverFilePath: _vm!.SteganographyViewModel.CoverImagePath,
+                outputPath: file.Path,
+                spacing: _vm.SteganographyViewModel.Spacing
+            )
         );
 
         _vm!.IsOutputSuccess = true;
@@ -163,7 +167,13 @@ public sealed partial class EncryptionParameterControl : UserControl
             }
         };
 
-        (bool success, StorageFile? file) = await FileSelector.SaveAsync(opts, encryptedData);
+        var (success, file) = await SpinnerDialogService
+            .ShowWhileAsync(
+                host: this,
+                title: "Saving file...",
+                work: () => FileSelector.SaveAsync(opts, encryptedData)
+            );
+
         if (!success || file == null)
         {
             _vm!.IsOutputSuccess = false;
