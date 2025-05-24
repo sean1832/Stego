@@ -15,11 +15,14 @@
     </Window.SystemBackdrop>
 
     <Grid Margin="0,10,0,0">
+
+        <!-- TODO: Implement Settings Page -->
         <NavigationView x:Name="NavigationPanel"
                         PaneDisplayMode="Left"
                         IsPaneOpen="True"
                         PaneTitle="Stego"
                         IsBackButtonVisible="Collapsed"
+                        IsSettingsVisible="False" 
                         OpenPaneLength="150"
                         ItemInvoked="NavigationPanel_OnItemInvoked">
             <NavigationView.MenuItems>
