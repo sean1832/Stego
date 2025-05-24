@@ -152,7 +152,7 @@ namespace Stego.UI.Controls
                 Content = outputPrompt
             };
 
-            outputPrompt.SetText(Convert.ToBase64String(decryptedData));
+            outputPrompt.SetText(Encoding.UTF8.GetString(decryptedData));
             ContentDialogResult result = await outputDialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {

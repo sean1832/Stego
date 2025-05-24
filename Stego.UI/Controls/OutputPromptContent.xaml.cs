@@ -25,7 +25,7 @@ namespace Stego.UI.Controls
             InitializeComponent();
         }
 
-        public void SetText(string content)
+        public void SetText(string? content)
         {
             OutputTextBlock.Text = content;
         }

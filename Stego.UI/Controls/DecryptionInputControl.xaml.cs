@@ -112,13 +112,20 @@ namespace Stego.UI.Controls
 
         private static byte[]? GetInputBoxBytes(RichEditBox textBox)
         {
-            textBox.Document.GetText(TextGetOptions.None, out string s);
-
-            // strip off any paragraph breaks
-            string trimmed = s.Trim('\r', '\n');
-            if (string.IsNullOrEmpty(trimmed)) return null;
-
-            return Encoding.UTF8.GetBytes(trimmed);
+            textBox.Document.GetText(TextGetOptions.None, out string b64);
+            // convert base64 string to byte array
+            if (string.IsNullOrEmpty(b64)) return null;
+            try
+            {
+                return Convert.FromBase64String(b64);
+            }
+            catch (FormatException)
+            {
+                // Handle the case where the string is not a valid base64 string
+                // TODO: Show an error message to the user
+                Console.WriteLine("Invalid base64 string.");
+                return null;
+            }
         }
     }
 }
