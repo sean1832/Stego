@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="Stego.UI.View.MessageBoxWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Stego.UI.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Root"
+    mc:Ignorable="d">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Content Panel -->
+        <StackPanel
+            Grid.Row="0"
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="10">
+            <!-- Icons: Only one visible at a time -->
+            <FontIcon
+                x:Name="ErrorIcon"
+                Glyph="&#xEB90;"
+                FontSize="24"
+                Foreground="Red"
+                Visibility="Collapsed" />
+            <FontIcon
+                x:Name="WarningIcon"
+                Glyph="&#xE814;"
+                FontSize="24"
+                Foreground="Orange"
+                Visibility="Collapsed" />
+            <FontIcon
+                x:Name="InfoIcon"
+                Glyph="&#xE783;"
+                FontSize="24"
+                Foreground="SteelBlue"
+                Visibility="Collapsed" />
+
+            <!-- Message Text -->
+            <TextBlock
+                Text="{Binding Message, ElementName=Root}"
+                TextWrapping="Wrap"
+                FontSize="14"
+                VerticalAlignment="Center"
+                Width="280"/>
+        </StackPanel>
+
+        <!-- OK Button -->
+        <Button
+            Grid.Row="1"
+            Content="OK"
+            Width="80"
+            HorizontalAlignment="Right"
+            Margin="0,20,0,0"
+            
+            Click="ButtonBase_OnClick"/>
+    </Grid>
+</Window>

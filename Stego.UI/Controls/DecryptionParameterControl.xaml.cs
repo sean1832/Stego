@@ -203,8 +203,8 @@ namespace Stego.UI.Controls
             catch (Exception ex)
             {
                 // Handle the exception (e.g., show a message to the user)
-                Console.WriteLine($"Decryption failed: {ex.Message}");
-                throw;
+                MessageBox.Error($"Decryption Failed: {ex.Message}");
+                return null;
             }
         }
     }

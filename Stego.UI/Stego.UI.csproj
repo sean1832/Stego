@@ -18,9 +18,11 @@
     <None Remove="Controls\DecryptionParameterControl.xaml" />
     <None Remove="Controls\EncryptionInputControl.xaml" />
     <None Remove="Controls\FileSelectorControl.xaml" />
+    <None Remove="Controls\MessageBoxContent.xaml" />
     <None Remove="Controls\OutputPromptContent.xaml" />
     <None Remove="Page\DecryptionPage.xaml" />
     <None Remove="Page\EncryptionPage.xaml" />
+    <None Remove="View\MessageBoxWindow.xaml" />
     <None Remove="View\PasswordDialogContent.xaml" />
   </ItemGroup>
 
@@ -126,6 +128,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="View\MessageBoxWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\MessageBoxContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!--
