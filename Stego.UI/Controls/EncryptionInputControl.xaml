@@ -52,7 +52,7 @@
             <!-- Rich text box for string input -->
             <RichEditBox x:Name="InputBox"
                          Grid.Row="0"
-                         PlaceholderText="Content to encrypt"
+                         PlaceholderText="Plaintext to encrypt..."
                          LostFocus="InputBox_OnLostFocus" />
 
             <Grid Grid.Row="1">

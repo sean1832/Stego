@@ -25,7 +25,6 @@
         <NavigationView Grid.Row="1" x:Name="NavigationPanel"
                         PaneDisplayMode="Left"
                         IsPaneOpen="True"
-                        PaneTitle="Stego"
                         IsBackButtonVisible="Collapsed"
                         IsSettingsVisible="False" 
                         OpenPaneLength="150"
