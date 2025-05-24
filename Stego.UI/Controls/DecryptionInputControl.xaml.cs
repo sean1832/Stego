@@ -122,8 +122,7 @@ namespace Stego.UI.Controls
             catch (FormatException)
             {
                 // Handle the case where the string is not a valid base64 string
-                // TODO: Show an error message to the user
-                Console.WriteLine("Invalid base64 string.");
+                MessageBox.Error("Failed to convert from base64 string.");
                 return null;
             }
         }
