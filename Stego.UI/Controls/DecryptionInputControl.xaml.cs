@@ -46,11 +46,13 @@ namespace Stego.UI.Controls
             {
                 case "String":
                     _vm.InputType = InputDataType.String;
+                    _vm.InputFilePath = null;
                     RichTextBox.Visibility = Visibility.Visible;
                     FileSelector.Visibility = Visibility.Collapsed;
                     break;
                 case "File":
                     _vm.InputType = InputDataType.GenericFile;
+                    _vm.Data = null;
                     RichTextBox.Visibility = Visibility.Collapsed;
                     FileSelector.Visibility = Visibility.Visible;
                     break;
@@ -65,7 +67,15 @@ namespace Stego.UI.Controls
             // load all bytes from the file
             try
             {
-                _vm.Data = File.ReadAllBytes(e);
+                _vm.InputFilePath = e;
+                if (e.EndsWith(".png") || e.EndsWith(".bmp"))
+                {
+                    _vm.InputType = InputDataType.LosslessImage;
+                }
+                else if (e.EndsWith(".jpg") || e.EndsWith(".jpeg"))
+                {
+                    _vm.InputType = InputDataType.JpegImage;
+                }
             }
             catch (Exception ex)
             {

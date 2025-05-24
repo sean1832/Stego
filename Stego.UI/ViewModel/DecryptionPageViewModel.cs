@@ -24,6 +24,18 @@ namespace Stego.UI.ViewModel
             }
         }
 
+        private string? _inputFilePath;
+        public string? InputFilePath
+        {
+            get => _inputFilePath;
+            set
+            {
+                if (_inputFilePath == value) return;
+                _inputFilePath = value;
+                OnPropertyChanged(nameof(InputFilePath));
+            }
+        }
+
         // Data to be decrypted
         private byte[]? _data;
         public byte[]? Data
@@ -37,6 +49,42 @@ namespace Stego.UI.ViewModel
             }
         }
 
+        // Status
+        private bool _isOutputSuccess;
+        public bool IsOutputSuccess
+        {
+            get => _isOutputSuccess;
+            set
+            {
+                if (_isOutputSuccess == value) return;
+                _isOutputSuccess = value;
+                OnPropertyChanged();           // notify bindings/listeners
+            }
+        }
+
+        private string _outputMessage = "";
+        public string OutputMessage
+        {
+            get => _outputMessage;
+            set
+            {
+                if (_outputMessage == value) return;
+                _outputMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _outputFilePath = "";
+        public string OutputFilePath
+        {
+            get => _outputFilePath;
+            set
+            {
+                if (_outputFilePath == value) return;
+                _outputFilePath = value;
+                OnPropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string? propName = null)

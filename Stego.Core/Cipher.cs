@@ -38,5 +38,24 @@ namespace Stego.Core
             byte[] encryptedRawData = aes.Encrypt(key, new ReadOnlySpan<byte>(nonce), null, data);
             return DataPacker.PackAll(salt, nonce, param, encryptedRawData);
         }
+
+        public static byte[]? DecryptAes256Gcm(ReadOnlySpan<byte> password, ReadOnlySpan<byte> data)
+        {
+            EncryptionEnvelope envelope = DataPacker.UnpackAll(data);
+            Argon2id kdf = PasswordBasedKeyDerivationAlgorithm.Argon2id(new Argon2Parameters
+            {
+                DegreeOfParallelism = envelope.Parallelism,
+                MemorySize = envelope.MemorySize,
+                NumberOfPasses = envelope.Iterations
+            });
+            Aes256Gcm aes = new Aes256Gcm();
+            Key key = kdf.DeriveKey(
+                password,
+                new ReadOnlySpan<byte>(envelope.Salt),
+                aes
+            );
+            // decrypt content using the key
+            return aes.Decrypt(key, new ReadOnlySpan<byte>(envelope.Nonce), null, envelope.EncryptedData);
+        }
     }
 }
