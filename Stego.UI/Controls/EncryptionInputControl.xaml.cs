@@ -42,7 +42,7 @@ namespace Stego.UI.Controls
                     FileSelectorControl.Visibility = Visibility.Collapsed;
                     break;
                 case "File":
-                    _vm.InputType = InputDataType.File;
+                    _vm.InputType = InputDataType.GenericFile;
                     TextInputPanel.Visibility = Visibility.Collapsed;
                     FileSelectorControl.Visibility = Visibility.Visible;
                     break;

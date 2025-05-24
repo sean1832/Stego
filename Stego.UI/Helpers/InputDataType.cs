@@ -9,6 +9,8 @@ namespace Stego.UI.Helpers
     public enum InputDataType
     {
         String,
-        File
+        GenericFile,
+        LosslessImage,
+        JpegImage
     }
 }

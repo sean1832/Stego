@@ -50,7 +50,7 @@ namespace Stego.UI.Controls
                     FileSelector.Visibility = Visibility.Collapsed;
                     break;
                 case "File":
-                    _vm.InputType = InputDataType.File;
+                    _vm.InputType = InputDataType.GenericFile;
                     RichTextBox.Visibility = Visibility.Collapsed;
                     FileSelector.Visibility = Visibility.Visible;
                     break;

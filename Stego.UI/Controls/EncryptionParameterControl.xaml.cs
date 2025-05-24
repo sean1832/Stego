@@ -58,7 +58,7 @@ public sealed partial class EncryptionParameterControl : UserControl
             dialog.PrimaryButtonText = "Encrypt As Image";
             dialog.PrimaryButtonClick += async (s, args) => await HandleEncryptClickAsync(dialog, prompt, args, SaveSteganographyFile);
         }
-        else if (_vm.InputType == InputDataType.File && (_vm.Data != null) && (_vm.Data.Length >= 524288)) 
+        else if (_vm.InputType != InputDataType.String && (_vm.Data != null) && (_vm.Data.Length >= 524288)) 
         {
             // if size larger than 0.5MB &&
             // if input type is file, swap primary button to "Encrypt As File", disable secondary button
@@ -129,7 +129,7 @@ public sealed partial class EncryptionParameterControl : UserControl
         );
 
         _vm!.IsOutputSuccess = true;
-        _vm.OutputMessage = "File saved successfully.";
+        _vm.OutputMessage = "GenericFile saved successfully.";
         _vm.OutputFilePath = file.Path;
     }
 
@@ -139,7 +139,7 @@ public sealed partial class EncryptionParameterControl : UserControl
         {
             FileTypeChoices =
             {
-                { "Stego File Format", [".stg"] },
+                { "Stego GenericFile Format", [".stg"] },
                 { "Generic Binary", [".bin"] },
                 { "Portable Network Graphics", [".png"] },
                 { "Bitmap", [".bmp"] }
@@ -155,7 +155,7 @@ public sealed partial class EncryptionParameterControl : UserControl
         else
         {
             _vm!.IsOutputSuccess = true;
-            _vm.OutputMessage = "File saved successfully.";
+            _vm.OutputMessage = "GenericFile saved successfully.";
             _vm.OutputFilePath = file.Path;
         }
     }
