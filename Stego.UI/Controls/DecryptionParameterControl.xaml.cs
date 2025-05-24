@@ -26,50 +26,57 @@ namespace Stego.UI.Controls
 
         private async void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            if (_vm == null)
-                return;
-            var prompt = new PasswordPromptContent();
-            var dialog = new ContentDialog
+            try
             {
-                XamlRoot = this.XamlRoot,
-                Style = (Style)Application.Current.Resources["DefaultContentDialogStyle"],
-                Title = "Password",
-                CloseButtonText = "Cancel",
-                DefaultButton = ContentDialogButton.Primary,
-                Content = prompt
-            };
+                if (_vm == null)
+                    return;
+                var prompt = new PasswordPromptContent();
+                var dialog = new ContentDialog
+                {
+                    XamlRoot = this.XamlRoot,
+                    Style = (Style)Application.Current.Resources["DefaultContentDialogStyle"],
+                    Title = "Password",
+                    CloseButtonText = "Cancel",
+                    DefaultButton = ContentDialogButton.Primary,
+                    Content = prompt
+                };
 
-            switch (_vm.InputType)
-            {
-                case InputDataType.GenericFile:
-                    if (_vm.Data.Length >= 524288)
-                    {
-                        dialog.PrimaryButtonText = "Decrypt As File";
-                        dialog.PrimaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args,false, SaveDecryptedFile);
+                switch (_vm.InputType)
+                {
+                    case InputDataType.GenericFile:
+                        if (_vm.Data.Length >= 524288)
+                        {
+                            dialog.PrimaryButtonText = "Decrypt As File";
+                            dialog.PrimaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args,false, SaveDecryptedFile);
+                            break;
+                        }
+                        dialog.PrimaryButtonText = "Decrypt As String";
+                        dialog.PrimaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args,false, ShowTextOutputDialog);
+                        dialog.SecondaryButtonText = "Decrypt As File";
+                        dialog.SecondaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args,false, SaveDecryptedFile);
                         break;
-                    }
-                    dialog.PrimaryButtonText = "Decrypt As String";
-                    dialog.PrimaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args,false, ShowTextOutputDialog);
-                    dialog.SecondaryButtonText = "Decrypt As File";
-                    dialog.SecondaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args,false, SaveDecryptedFile);
-                    break;
-                case InputDataType.LosslessImage:
-                    dialog.PrimaryButtonText = "Decrypt As String";
-                    dialog.PrimaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, true, ShowTextOutputDialog);
-                    dialog.SecondaryButtonText = "Decrypt As File";
-                    dialog.SecondaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, true, SaveDecryptedFile);
-                    break;
-                case InputDataType.JpegImage:
-                    throw new NotImplementedException("Jpeg image is not currently supported");
-                case InputDataType.String:
-                    dialog.PrimaryButtonText = "Decrypt As String";
-                    dialog.PrimaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, false, ShowTextOutputDialog);
-                    dialog.SecondaryButtonText = "Decrypt As File";
-                    dialog.SecondaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, false, SaveDecryptedFile);
-                    break;
-            }
+                    case InputDataType.LosslessImage:
+                        dialog.PrimaryButtonText = "Decrypt As String";
+                        dialog.PrimaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, true, ShowTextOutputDialog);
+                        dialog.SecondaryButtonText = "Decrypt As File";
+                        dialog.SecondaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, true, SaveDecryptedFile);
+                        break;
+                    case InputDataType.JpegImage:
+                        throw new NotImplementedException("Jpeg image is not currently supported");
+                    case InputDataType.String:
+                        dialog.PrimaryButtonText = "Decrypt As String";
+                        dialog.PrimaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, false, ShowTextOutputDialog);
+                        dialog.SecondaryButtonText = "Decrypt As File";
+                        dialog.SecondaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args, false, SaveDecryptedFile);
+                        break;
+                }
 
-            await dialog.ShowAsync();
+                await dialog.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Error($"Error showing password dialog during decryption: {ex.Message}");
+            }
         }
 
 
@@ -137,59 +144,73 @@ namespace Stego.UI.Controls
 
         private async void ShowTextOutputDialog(byte[] decryptedData)
         {
-            OutputPromptContent outputPrompt = new OutputPromptContent();
-            ContentDialog outputDialog = new ContentDialog
+            try
             {
-                Title = "Encrypted Data",
-                PrimaryButtonText = "Copy to Clipboard",
-                CloseButtonText = "Close",
-                DefaultButton = ContentDialogButton.Primary,
-                XamlRoot = this.XamlRoot,
-                Style = (Style)Application.Current.Resources["DefaultContentDialogStyle"],
-                Content = outputPrompt
-            };
+                OutputPromptContent outputPrompt = new OutputPromptContent();
+                ContentDialog outputDialog = new ContentDialog
+                {
+                    Title = "Encrypted Data",
+                    PrimaryButtonText = "Copy to Clipboard",
+                    CloseButtonText = "Close",
+                    DefaultButton = ContentDialogButton.Primary,
+                    XamlRoot = this.XamlRoot,
+                    Style = (Style)Application.Current.Resources["DefaultContentDialogStyle"],
+                    Content = outputPrompt
+                };
 
-            outputPrompt.SetText(Encoding.UTF8.GetString(decryptedData));
-            ContentDialogResult result = await outputDialog.ShowAsync();
-            if (result == ContentDialogResult.Primary)
+                outputPrompt.SetText(Encoding.UTF8.GetString(decryptedData));
+                ContentDialogResult result = await outputDialog.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    DataPackage dataPackage = new DataPackage();
+                    dataPackage.SetText(outputPrompt.GetText());
+                    Clipboard.SetContent(dataPackage);
+                }
+            }
+            catch (Exception e)
             {
-                DataPackage dataPackage = new DataPackage();
-                dataPackage.SetText(outputPrompt.GetText());
-                Clipboard.SetContent(dataPackage);
+                MessageBox.Error($"Error showing text output: {e.Message}");
             }
         }
 
         private async void SaveDecryptedFile(byte[] decryptedData)
         {
-            var opts = new FileSelectorSaveOptions
+            try
             {
-                FileTypeChoices = {
-                    { "Plaintext", [".txt"] },
-                    { "PDF", [".pdf"] },
-                    { "Zip archive", [".zip"] },
-                    { "7z archive", [".7z"] },
-                    { "Generic Binary", [".bin"] },
+                var opts = new FileSelectorSaveOptions
+                {
+                    FileTypeChoices = {
+                        { "Plaintext", [".txt"] },
+                        { "PDF", [".pdf"] },
+                        { "Zip archive", [".zip"] },
+                        { "7z archive", [".7z"] },
+                        { "Generic Binary", [".bin"] },
+                    }
+                };
+
+                var (success, file) = await SpinnerDialogService
+                    .ShowWhileAsync(
+                        host: this,
+                        title: "Saving file...",
+                        work: () => FileSelector.SaveAsync(opts, decryptedData)
+                    );
+
+                // update VM
+                if (!success || file == null)
+                {
+                    _vm!.IsOutputSuccess = false;
+                    _vm.OutputMessage = "Failed to save the file.";
                 }
-            };
-
-            var (success, file) = await SpinnerDialogService
-                .ShowWhileAsync(
-                    host: this,
-                    title: "Saving file...",
-                    work: () => FileSelector.SaveAsync(opts, decryptedData)
-                );
-
-            // update VM
-            if (!success || file == null)
-            {
-                _vm!.IsOutputSuccess = false;
-                _vm.OutputMessage = "Failed to save the file.";
+                else
+                {
+                    _vm!.IsOutputSuccess = true;
+                    _vm.OutputMessage = "File saved successfully.";
+                    _vm.OutputFilePath = file.Path;
+                }
             }
-            else
+            catch (Exception e)
             {
-                _vm!.IsOutputSuccess = true;
-                _vm.OutputMessage = "File saved successfully.";
-                _vm.OutputFilePath = file.Path;
+                MessageBox.Error($"Error saving file: {e.Message}");
             }
         }
 

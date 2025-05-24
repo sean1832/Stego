@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Stego.UI.Helpers;
 using WinRT.Interop;
 
 
@@ -55,56 +56,63 @@ namespace Stego.UI.Controls
 
         private async void OnSelectFileClicked(object sender, RoutedEventArgs e)
         {
-            var picker = new FileOpenPicker();
-
-            var window = App.MainWindow;
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
-            // hook up the file picker to the current window
-            InitializeWithWindow.Initialize(picker, hwnd);
-
-            if (!string.IsNullOrEmpty(FileTypes))
+            try
             {
-                List<string> fileTypes = new(FileTypes.Split(','));
-                foreach (var fileType in fileTypes)
+                var picker = new FileOpenPicker();
+
+                var window = App.MainWindow;
+                IntPtr hwnd = WindowNative.GetWindowHandle(window);
+                // hook up the file picker to the current window
+                InitializeWithWindow.Initialize(picker, hwnd);
+
+                if (!string.IsNullOrEmpty(FileTypes))
                 {
-                    picker.FileTypeFilter.Add(fileType);
-                }
-            }
-            else
-            {
-                picker.FileTypeFilter.Add("*");
-            }
-
-            StorageFile? file = await picker.PickSingleFileAsync();
-            if (file == null)
-                return; // User cancelled the file picker
-
-            // set the dependency property so parent can react to it
-            SelectedFilePath = file.Path;
-
-
-            using (var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read))
-            {
-                if (file.Path.EndsWith(".png") || file.Path.EndsWith(".bmp"))
-                {
-                    var bitmapImage = new BitmapImage();
-                    await bitmapImage.SetSourceAsync(stream);
-                    CoverImage.Source = bitmapImage;
-                    CoverImage.Visibility = Visibility.Visible;
-                    GeneralFile.Visibility = Visibility.Collapsed;
+                    List<string> fileTypes = new(FileTypes.Split(','));
+                    foreach (var fileType in fileTypes)
+                    {
+                        picker.FileTypeFilter.Add(fileType);
+                    }
                 }
                 else
                 {
-                    CoverImage.Visibility = Visibility.Collapsed;
-                    GeneralFile.Visibility = Visibility.Visible;
-                    GeneralFileName.Text = Path.GetFileName(file.Path);
-                    Tuple<double, string> fileSizeData = ConvertFileSizeUnit(await GetFileSizeAsync(file));
-                    GeneralFileSize.Text = $"{fileSizeData.Item1} {fileSizeData.Item2}";
+                    picker.FileTypeFilter.Add("*");
                 }
-            }
 
-            FileSelectionButton.Visibility = Visibility.Collapsed;
-            FileActionPanel.Visibility = Visibility.Visible;
+                StorageFile? file = await picker.PickSingleFileAsync();
+                if (file == null)
+                    return; // User cancelled the file picker
+
+                // set the dependency property so parent can react to it
+                SelectedFilePath = file.Path;
+
+
+                using (var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read))
+                {
+                    if (file.Path.EndsWith(".png") || file.Path.EndsWith(".bmp"))
+                    {
+                        var bitmapImage = new BitmapImage();
+                        await bitmapImage.SetSourceAsync(stream);
+                        CoverImage.Source = bitmapImage;
+                        CoverImage.Visibility = Visibility.Visible;
+                        GeneralFile.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        CoverImage.Visibility = Visibility.Collapsed;
+                        GeneralFile.Visibility = Visibility.Visible;
+                        GeneralFileName.Text = Path.GetFileName(file.Path);
+                        Tuple<double, string> fileSizeData = ConvertFileSizeUnit(await GetFileSizeAsync(file));
+                        GeneralFileSize.Text = $"{fileSizeData.Item1} {fileSizeData.Item2}";
+                    }
+                }
+
+                FileSelectionButton.Visibility = Visibility.Collapsed;
+                FileActionPanel.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Error($"Error selecting picking file: {ex.Message}");
+            }
         }
 
         private async Task<ulong> GetFileSizeAsync(StorageFile file)
