@@ -21,7 +21,7 @@
             <x:String>String</x:String>
             <x:String>File</x:String>
         </ComboBox>
-        <RichEditBox x:Name="RichTextBox" Grid.Row="2"/>
+        <RichEditBox x:Name="InputBox" Grid.Row="2" LostFocus="InputBox_OnLostFocus"/>
         <local:FileSelectorControl x:Name="FileSelector" Grid.Row="2" SelectedFilePathChanged="FileSelector_OnSelectedFilePathChanged"/>
 
         <InfoBar

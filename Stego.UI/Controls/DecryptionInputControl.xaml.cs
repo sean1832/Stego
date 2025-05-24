@@ -10,8 +10,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Microsoft.UI.Text;
 using Stego.UI.Helpers;
 using Stego.UI.ViewModel;
 
@@ -29,7 +31,7 @@ namespace Stego.UI.Controls
 
             InputTypeComboBox.SelectionChanged += InputTypeComboBox_OnSelectionChanged;
 
-            RichTextBox.Visibility = Visibility.Visible;
+            InputBox.Visibility = Visibility.Visible;
             FileSelector.Visibility = Visibility.Collapsed;
 
             this.DataContextChanged += DecryptionInputControl_DataContextChanged;
@@ -47,13 +49,13 @@ namespace Stego.UI.Controls
                 case "String":
                     _vm.InputType = InputDataType.String;
                     _vm.InputFilePath = null;
-                    RichTextBox.Visibility = Visibility.Visible;
+                    InputBox.Visibility = Visibility.Visible;
                     FileSelector.Visibility = Visibility.Collapsed;
                     break;
                 case "File":
                     _vm.InputType = InputDataType.GenericFile;
                     _vm.Data = null;
-                    RichTextBox.Visibility = Visibility.Collapsed;
+                    InputBox.Visibility = Visibility.Collapsed;
                     FileSelector.Visibility = Visibility.Visible;
                     break;
             }
@@ -86,6 +88,37 @@ namespace Stego.UI.Controls
                 // Handle the exception (e.g., show a message to the user)
                 Console.WriteLine($"Error reading file: {ex.Message}");
             }
+        }
+
+        /// <summary>
+        /// Triggered on InputBox clicked outside the box.
+        /// </summary>
+        private void InputBox_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (_vm == null)
+                return;
+
+            byte[]? data = GetInputBoxBytes(InputBox);
+            if (data == null)
+            {
+                // No data entered, clear the Data property
+                _vm.Data = null;
+                return;
+            }
+
+            _vm.InputType = InputDataType.String;
+            _vm.Data = data;
+        }
+
+        private static byte[]? GetInputBoxBytes(RichEditBox textBox)
+        {
+            textBox.Document.GetText(TextGetOptions.None, out string s);
+
+            // strip off any paragraph breaks
+            string trimmed = s.Trim('\r', '\n');
+            if (string.IsNullOrEmpty(trimmed)) return null;
+
+            return Encoding.UTF8.GetBytes(trimmed);
         }
     }
 }
