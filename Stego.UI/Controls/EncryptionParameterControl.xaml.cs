@@ -215,13 +215,7 @@ public sealed partial class EncryptionParameterControl : UserControl
     {
         // run the slow work off the UI thread
         byte[] pwBytes = Encoding.UTF8.GetBytes(password);
-        return await Task.Run(() =>
-            Cipher.EncryptAes256Gcm(
-                new ReadOnlySpan<byte>(pwBytes),
-                data,
-                Argon2Param
-            )
-        );
+        return await Cipher.EncryptAes256GcmAsync(pwBytes, data, Argon2Param);
     }
 }
 

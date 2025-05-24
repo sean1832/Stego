@@ -11,7 +11,8 @@ namespace Stego.Core
 {
     public static class Cipher
     {
-        public static byte[] EncryptAes256Gcm(ReadOnlySpan<byte> password, ReadOnlySpan<byte> data, Argon2Parameters param)
+        public static byte[] EncryptAes256Gcm(ReadOnlySpan<byte> password, ReadOnlySpan<byte> data,
+            Argon2Parameters param)
         {
             // Create a random salt
             byte[] salt = new byte[16];
@@ -19,6 +20,7 @@ namespace Stego.Core
             {
                 rng.GetBytes(salt);
             }
+
             // create a random nonce
             byte[] nonce = new byte[12];
             using (var rng = RandomNumberGenerator.Create())
@@ -38,6 +40,11 @@ namespace Stego.Core
             byte[] encryptedRawData = aes.Encrypt(key, new ReadOnlySpan<byte>(nonce), null, data);
             return DataPacker.PackAll(salt, nonce, param, encryptedRawData);
         }
+        public static Task<byte[]> EncryptAes256GcmAsync(ReadOnlyMemory<byte> passwordMemory,
+            ReadOnlyMemory<byte> dataMemory, Argon2Parameters param)
+        {
+            return Task.Run(() => EncryptAes256Gcm(passwordMemory.Span, dataMemory.Span, param));
+        }
 
         public static byte[]? DecryptAes256Gcm(ReadOnlySpan<byte> password, ReadOnlySpan<byte> data)
         {
@@ -56,6 +63,12 @@ namespace Stego.Core
             );
             // decrypt content using the key
             return aes.Decrypt(key, new ReadOnlySpan<byte>(envelope.Nonce), null, envelope.EncryptedData);
+        }
+
+        public static Task<byte[]?> DecryptAes256GcmAsync(ReadOnlyMemory<byte> passwordMemory,
+            ReadOnlyMemory<byte> dataMemory)
+        {
+            return Task.Run(() => DecryptAes256Gcm(passwordMemory.Span, dataMemory.Span));
         }
     }
 }

@@ -4,14 +4,9 @@ using Stego.Core;
 using Stego.UI.Helpers;
 using Stego.UI.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Contacts;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Devices.Bluetooth.Advertisement;
-using Windows.Storage;
 
 namespace Stego.UI.Controls
 {
@@ -115,7 +110,7 @@ namespace Stego.UI.Controls
                     return;
                 }
 
-                data = SteganographyLsb.Decode(_vm.InputFilePath, (int)SpacingSlider.Value);
+                data = await SteganographyLsb.DecodeAsync(_vm.InputFilePath, (int)SpacingSlider.Value);
             }
 
             // run decryption
@@ -203,9 +198,7 @@ namespace Stego.UI.Controls
             if (_vm == null) throw new InvalidOperationException("ViewModel is not set.");
             try
             {
-                return await Task.Run(() =>
-                    Cipher.DecryptAes256Gcm(Encoding.UTF8.GetBytes(password), data)
-                );
+                return await Cipher.DecryptAes256GcmAsync(Encoding.UTF8.GetBytes(password), data);
             }
             catch (Exception ex)
             {
