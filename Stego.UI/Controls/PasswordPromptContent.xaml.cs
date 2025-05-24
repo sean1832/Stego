@@ -31,5 +31,15 @@ namespace Stego.UI.Controls
             ProgressRing.IsActive = true;
             ProgressRing.Visibility = Visibility.Visible;
         }
+
+        public void HideSpinner()
+        {
+            // enable input
+            PasswordBox.IsEnabled = true;
+            // hide spinner
+            ProgressRing.IsActive = false;
+            ProgressRing.Visibility = Visibility.Collapsed;
+            ErrorTextBlock.Visibility = Visibility.Collapsed;
+        }
     }
 }

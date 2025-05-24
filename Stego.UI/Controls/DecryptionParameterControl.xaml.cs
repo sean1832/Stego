@@ -98,6 +98,7 @@ namespace Stego.UI.Controls
             byte[] data = _vm.Data;
             if ((data == null || data.Length == 0) && string.IsNullOrEmpty(_vm.InputFilePath))
             {
+                prompt.HideSpinner();
                 prompt.ShowError("No data to decrypt. Please provide input data or select a file.");
                 return;
             }
@@ -107,6 +108,7 @@ namespace Stego.UI.Controls
             {
                 if (string.IsNullOrEmpty(_vm.InputFilePath))
                 {
+                    prompt.HideSpinner();
                     prompt.ShowError("No input file path provided for steganography decoding.");
                     return;
                 }
@@ -120,8 +122,8 @@ namespace Stego.UI.Controls
                 byte[]? decryptedData = await DecryptAsync(prompt.Password, data);
                 if (decryptedData == null)
                 {
+                    prompt.HideSpinner();
                     prompt.ShowError("Decryption failed. Please check your password and input data.");
-                    prompt
                     return;
                 }
 
@@ -131,6 +133,7 @@ namespace Stego.UI.Controls
             }
             else
             {
+                prompt.HideSpinner();
                 prompt.ShowError("No data to decrypt. Please provide input data or select a file.");
             }
         }
