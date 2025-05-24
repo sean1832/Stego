@@ -42,13 +42,17 @@ namespace Stego.UI.Helpers
             // fire-and-forget showing it
             _ = dlg.ShowAsync();
 
-            // do the real work
-            T result = await work();
-
-            // then hide
-            dlg.Hide();
-
-            return result;
+            try
+            {
+                // do the real work
+                T result = await work();
+                return result;
+            }
+            finally
+            {
+                // always hide the dialog, even if work() threw
+                dlg.Hide();
+            }
         }
 
         /// <summary>
