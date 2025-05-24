@@ -21,7 +21,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="Steganography:" Style="{StaticResource SubtitleTextBlockStyle}"/>
-            <local:SteganographyLsbControl Grid.Row="1"/>
+            <local:SteganographyLsbControl x:Name="LsbControl" Grid.Row="1"/>
             <Slider x:Name="SpacingSlider" Grid.Row="2" Header="Spacing" Minimum="1" Maximum="30" StepFrequency="5" Value="10"/>
         </Grid>
 

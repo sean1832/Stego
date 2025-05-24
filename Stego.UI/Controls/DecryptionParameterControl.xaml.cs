@@ -113,7 +113,7 @@ namespace Stego.UI.Controls
                 // decode steganography if needed
                 if (isSteganographyFile)
                 {
-                    data = await SteganographyLsb.DecodeAsync(_vm.InputFilePath, (int)SpacingSlider.Value);
+                    data = await SteganographyLsb.DecodeAsync(_vm.InputFilePath, (int)SpacingSlider.Value, (short)LsbControl.LsbCount);
                 }
 
                 if (data == null)

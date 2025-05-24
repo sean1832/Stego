@@ -123,7 +123,19 @@ public sealed partial class EncryptionParameterControl : UserControl
             prompt.ShowError("No data to encrypt. Please provide input data or select a file.");
             return;
         }
-        byte[] data = await EncryptAsync(prompt.Password, dataToEncrypt);
+
+        byte[] data;
+        try
+        {
+            data = await EncryptAsync(prompt.Password, dataToEncrypt);
+        }
+        catch (Exception e)
+        {
+            prompt.HideSpinner();
+            prompt.ShowError($"Encryption failed: {e.Message}");
+            return;
+        }
+
 
         // done
         dialog.Hide();
@@ -154,7 +166,8 @@ public sealed partial class EncryptionParameterControl : UserControl
                     message: encryptedData,
                     coverFilePath: _vm!.SteganographyViewModel.CoverImagePath,
                     outputPath: file.Path,
-                    spacing: _vm.SteganographyViewModel.Spacing
+                    spacing: _vm.SteganographyViewModel.Spacing,
+                    lsbCount: _vm.SteganographyViewModel.LsbCount
                 )
             );
 

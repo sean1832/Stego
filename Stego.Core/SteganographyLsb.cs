@@ -23,13 +23,18 @@ namespace Stego.Core
         /// <param name="outputPath">The file path where the encoded PNG image will be saved. Must not be null or empty.</param>
         /// <param name="spacing">The spacing between pixels used for encoding. Determines the interval at which bits are embedded in the
         /// image.</param>
+        /// <param name="lsbCount">The number of LSB to encode in to an image (1-8). Large means less stealthy, more data density</param>
         /// <exception cref="ArgumentException">Thrown if <paramref name="coverFilePath"/> is not a PNG file, if <paramref name="message"/> is empty, if
         /// <paramref name="outputPath"/> is null or empty, or if the image is too small to encode the message with the
         /// specified spacing.</exception>
         /// <exception cref="FileNotFoundException">Thrown if the file specified by <paramref name="coverFilePath"/> does not exist.</exception>
         /// <exception cref="InvalidOperationException">Thrown if the cover file cannot be decoded as a valid image.</exception>
-        public static void Encode(byte[] message, string coverFilePath, string outputPath, int spacing)
+        public static void Encode(byte[] message, string coverFilePath, string outputPath, int spacing, short lsbCount)
         {
+            // validate lsbCount
+            if (lsbCount < 1 || lsbCount > 8)
+                throw new ArgumentException("LSB count must be between 1 and 8.", nameof(lsbCount));
+
             string ext = Path.GetExtension(coverFilePath).ToLowerInvariant();
             if (ext != ".png")
             {
@@ -56,17 +61,28 @@ namespace Stego.Core
             byte[] payload = lengthHeader.Concat(message).ToArray();
             bool[] bits = ToBits(payload); // 0-1 byte array
 
+            int totalBits = bits.Length;
+            int groupCount = (totalBits + lsbCount - 1) / lsbCount;
+            if (!IsValidSpacing(spacing, groupCount, pixelBuffer.Length))
+                throw new ArgumentException(
+                    $"Image too small: need at least {groupCount * spacing} bytes for encoding with {lsbCount} LSBs.");
 
-            if (!IsValidSpacing(spacing, bits.Length, pixelBuffer.Length))
-                throw new ArgumentException($"Image too small: need at least {bits.Length * spacing} bytes.");
 
-            // mask to clear LSB bits: 11111110
-            const byte mask = 0xFE;
-            for (int i = 0; i < bits.Length; i++)
+            // mask to clear the lowest 'lsbCount' bits
+            byte mask = (byte)(~((1 << lsbCount) - 1));
+            for (int g = 0; g < groupCount; g++)
             {
-                int idx = i * spacing;
+                int idx = g * spacing;
                 byte cleared = (byte)(pixelBuffer[idx] & mask);
-                pixelBuffer[idx] = (byte)(cleared | (bits[i] ? 1 : 0));
+                byte value = 0;
+                for (int bitIndex = 0; bitIndex < lsbCount; bitIndex++)
+                {
+                    int bitPos = g * lsbCount + bitIndex;
+                    if (bitPos >= totalBits) break;
+                    if (bits[bitPos])
+                        value |= (byte)(1 << bitIndex);
+                }
+                pixelBuffer[idx] = (byte)(cleared | value);
             }
 
             // write to output file
@@ -81,9 +97,9 @@ namespace Stego.Core
             image.Encode(SKEncodedImageFormat.Png, 100).SaveTo(outputStream);
         }
 
-        public static async Task EncodeAsync(byte[] message, string coverFilePath, string outputPath, int spacing)
+        public static async Task EncodeAsync(byte[] message, string coverFilePath, string outputPath, int spacing, short lsbCount)
         {
-            await Task.Run(() => Encode(message, coverFilePath, outputPath, spacing));
+            await Task.Run(() => Encode(message, coverFilePath, outputPath, spacing, lsbCount));
         }
 
         /// <summary>
@@ -99,8 +115,12 @@ namespace Stego.Core
         /// <exception cref="FileNotFoundException">Thrown if the specified <paramref name="coverFilePath"/> does not exist.</exception>
         /// <exception cref="ArgumentException">Thrown if the file specified by <paramref name="coverFilePath"/> is not a PNG image.</exception>
         /// <exception cref="InvalidOperationException">Thrown if the image cannot be decoded, or if the image is too small to contain the declared payload length.</exception>
-        public static byte[] Decode(string coverFilePath, int spacing)
+        public static byte[] Decode(string coverFilePath, int spacing, short lsbCount)
         {
+            // validate lsbCount
+            if (lsbCount < 1 || lsbCount > 8)
+                throw new ArgumentException("LSB count must be between 1 and 8.", nameof(lsbCount));
+
             if (!File.Exists(coverFilePath))
                 throw new FileNotFoundException("Cover file not found.", coverFilePath);
             if (Path.GetExtension(coverFilePath).ToLowerInvariant() != ".png")
@@ -118,10 +138,14 @@ namespace Stego.Core
 
             // read 32 header bits (4 bytes) for length
             bool[] headerBits = new bool[32];
-            for (int i = 0; i < headerBits.Length; i++)
+            int headerFilled = 0;
+            for (int g = 0; headerFilled < headerBits.Length; g++)
             {
-                int idx = i * spacing;
-                headerBits[i] = (pixelBuffer[idx] & 1) != 0;
+                int idx = g * spacing;
+                for (int bitIndex = 0; bitIndex < lsbCount && headerFilled < headerBits.Length; bitIndex++)
+                {
+                    headerBits[headerFilled++] = ((pixelBuffer[idx] >> bitIndex) & 1) != 0;
+                }
             }
 
             // reconstruct 4-byte big-endian length
@@ -132,27 +156,27 @@ namespace Stego.Core
 
             // read payload bits
             long totalBits = (long)payloadLength * 8;
-            if (!IsValidSpacing(spacing, (int)totalBits + 32, pixelBuffer.Length))
+            int groupCountPayload = (int)((totalBits + lsbCount - 1) / lsbCount);
+            if (!IsValidSpacing(spacing, groupCountPayload, pixelBuffer.Length))
                 throw new InvalidOperationException($"Image too small for declared payload length.");
 
             bool[] payloadBits = new bool[totalBits];
-            for (int i = 0; i < payloadBits.Length; i++)
+            int payloadFilled = 0;
+            for (int g = 0; payloadFilled < totalBits; g++)    // <<< new
             {
-                int idx = (i + 32) * spacing;
-                payloadBits[i] = (pixelBuffer[idx] & 1) != 0;
-
-                // value: a7 a6 a5 a4 a3 a2 a1 a0
-                // &mask:  0  0  0  0  0  0  0  1
-                // --------------------------------
-                // result: 0  0  0  0  0  0  0  a0
+                int idx = g * spacing;
+                for (int bitIndex = 0; bitIndex < lsbCount && payloadFilled < totalBits; bitIndex++)
+                {
+                    payloadBits[payloadFilled++] = ((pixelBuffer[idx] >> bitIndex) & 1) != 0;
+                }
             }
 
             return FromBits(payloadBits);
         }
 
-        public static async Task<byte[]> DecodeAsync(string coverFilePath, int spacing)
+        public static async Task<byte[]> DecodeAsync(string coverFilePath, int spacing, short lsbCount)
         {
-            return await Task.Run(() => Decode(coverFilePath, spacing));
+            return await Task.Run(() => Decode(coverFilePath, spacing, lsbCount));
         }
 
         /// <summary>
