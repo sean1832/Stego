@@ -8,15 +8,15 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="2244c038-064c-47f1-be45-ea9b5a1dddd5"
-    Publisher="CN=turing"
+    Name="ZKLAB.1003864523FE2"
+    Publisher="CN=3FA2F1CE-D2F9-4124-B143-F7B030B8E446"
     Version="0.0.1.0" />
 
-  <mp:PhoneIdentity PhoneProductId="2244c038-064c-47f1-be45-ea9b5a1dddd5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="d08c0b2e-ff85-4150-8152-02995182108b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Stego.UI</DisplayName>
-    <PublisherDisplayName>turing</PublisherDisplayName>
+    <DisplayName>StegoUI</DisplayName>
+    <PublisherDisplayName>ZKLAB</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -34,7 +34,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="Stego.UI"
+        DisplayName="StegoUI"
         Description="Stego.UI"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
