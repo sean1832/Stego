@@ -48,7 +48,7 @@ namespace Stego.Core
                 throw new ArgumentException("Output path cannot be null or empty.", nameof(outputPath));
 
             using FileStream inputStream = File.OpenRead(coverFilePath);
-            using SKCodec codec = SKCodec.Create(inputStream) 
+            using SKCodec codec = SKCodec.Create(inputStream)
                 ?? throw new InvalidOperationException("Failed to create SKCodec from the cover file.");
             SKImageInfo info = new SKImageInfo(codec.Info.Width, codec.Info.Height, SKColorType.Rgba8888);
             byte[] pixelBuffer = new byte[info.BytesSize];
@@ -130,7 +130,7 @@ namespace Stego.Core
 
             // load into RGBA byte buffer
             using FileStream inputStream = File.OpenRead(coverFilePath);
-            using SKCodec codec = SKCodec.Create(inputStream) 
+            using SKCodec codec = SKCodec.Create(inputStream)
                 ?? throw new InvalidOperationException("Failed to create SKCodec from the cover file.");
             SKImageInfo info = new SKImageInfo(codec.Info.Width, codec.Info.Height, SKColorType.Rgba8888);
             byte[] pixelBuffer = new byte[info.BytesSize];
@@ -160,9 +160,13 @@ namespace Stego.Core
             if (!IsValidSpacing(spacing, groupCountPayload, pixelBuffer.Length))
                 throw new InvalidOperationException($"Image too small for declared payload length.");
 
+            // how many groups of lsbCount bits it took to read the 32-bit header
+            int headerGroupCount = (32 + lsbCount - 1) / lsbCount;
+
+            // now read only the *payload* bits, starting after the header groups
             bool[] payloadBits = new bool[totalBits];
             int payloadFilled = 0;
-            for (int g = 0; payloadFilled < totalBits; g++)    // <<< new
+            for (int g = headerGroupCount; payloadFilled < totalBits; g++)
             {
                 int idx = g * spacing;
                 for (int bitIndex = 0; bitIndex < lsbCount && payloadFilled < totalBits; bitIndex++)
