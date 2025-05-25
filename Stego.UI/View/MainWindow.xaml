@@ -14,7 +14,7 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid RowSpacing="8">
+    <Grid RowSpacing="8" x:Name="AppRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -26,7 +26,6 @@
                         PaneDisplayMode="Left"
                         IsPaneOpen="True"
                         IsBackButtonVisible="Collapsed"
-                        IsSettingsVisible="False" 
                         OpenPaneLength="150"
                         ItemInvoked="NavigationPanel_OnItemInvoked">
             <NavigationView.MenuItems>

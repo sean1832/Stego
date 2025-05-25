@@ -3,6 +3,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using Windows.ApplicationModel;
 using Microsoft.UI.Xaml.Media.Animation;
 using Stego.UI.Controls;
 using Stego.UI.View;
@@ -21,6 +22,8 @@ namespace Stego.UI.View
     public sealed partial class MainWindow : Window
     {
         public const double CollapseThreshold = 1000;
+
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -50,6 +53,13 @@ namespace Stego.UI.View
 
         private void NavigationPanel_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
+            if (args.InvokedItemContainer == (NavigationViewItemBase)sender.SettingsItem)
+            {
+                ContentFrame.Navigate(typeof(SettingPage));
+                return;
+            }
+
+
             if (args.InvokedItemContainer is NavigationViewItem navItem
                 && navItem.Tag is string tag)
             {

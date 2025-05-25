@@ -10,7 +10,7 @@
   <Identity
     Name="2244c038-064c-47f1-be45-ea9b5a1dddd5"
     Publisher="CN=turing"
-    Version="1.0.0.0" />
+    Version="0.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="2244c038-064c-47f1-be45-ea9b5a1dddd5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

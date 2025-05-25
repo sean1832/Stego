@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Stego.UI.View.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Stego.UI.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
+    mc:Ignorable="d">
+
+    <Grid MaxWidth="800" Margin="0,30,0,0" x:Name="SettingRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Title -->
+        <TextBlock Grid.Row="0" Margin="0,0,0,50" Text="Settings" Style="{StaticResource TitleTextBlockStyle}" />
+
+        <ScrollView Grid.Row="1"
+                    Padding="36,0,36,0"
+                    VerticalScrollBarVisibility="Auto"
+                    VerticalScrollMode="Auto">
+            <StackPanel Spacing="12">
+                <!-- Appearance Section -->
+                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Appearance &amp; behavior" />
+                <toolkit:SettingsCard Description="Select which app theme to display" Header="App theme">
+                    <toolkit:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE790;" />
+                    </toolkit:SettingsCard.HeaderIcon>
+                    <ComboBox
+                        x:Name="ThemeMode"
+                        AutomationProperties.AutomationId="themeModeComboBox"
+                        SelectionChanged="ThemeMode_OnSelectionChanged">
+                        <ComboBoxItem Content="Light" Tag="Light" />
+                        <ComboBoxItem Content="Dark" Tag="Dark" />
+                        <ComboBoxItem Content="Use system setting" Tag="Default" />
+                    </ComboBox>
+                </toolkit:SettingsCard>
+
+                <!-- Encryption Section -->
+
+                <!-- About Section -->
+                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
+                           Text="About"
+                           Margin="0,20,0,0"/>
+                <toolkit:SettingsExpander 
+                    Margin="0,0,0,24"
+                    Header="{x:Bind AppTitleName}"
+                    Description="© 2025 Zeke Zhang. All rights reserved.">
+                    <toolkit:SettingsExpander.HeaderIcon>
+                        <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/StoreLogo.scale-400.png"/>
+                    </toolkit:SettingsExpander.HeaderIcon>
+                    <TextBlock 
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind Version}"/>
+
+                    <toolkit:SettingsExpander.Items>
+                        <!-- Item under the expander -->
+                        <toolkit:SettingsCard
+                            x:Name="RepoCard"
+                            Click="RepoCard_OnClick"
+                            Header="GitHub Repository"
+                            IsClickEnabled="True">
+                            <toolkit:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;"/>
+                            </toolkit:SettingsCard.ActionIcon>
+                        </toolkit:SettingsCard>
+
+                        <toolkit:SettingsCard
+                            x:Name="BugRequestCard"
+                            Click="BugRequestCard_OnClick"
+                            Header="Submit an issue"
+                            IsClickEnabled="True">
+                            <toolkit:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;"/>
+                            </toolkit:SettingsCard.ActionIcon>
+                        </toolkit:SettingsCard>
+
+                        <toolkit:SettingsCard
+                            x:Name="DonationCard"
+                            Click="DonationCard_OnClick"
+                            Header="Donation"
+                            IsClickEnabled="True">
+                            <toolkit:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;"/>
+                            </toolkit:SettingsCard.ActionIcon>
+                        </toolkit:SettingsCard>
+
+                        <toolkit:SettingsCard
+                            HorizontalContentAlignment="Left"
+                            ContentAlignment="Vertical"
+                            Header="Dependencies &amp; references">
+                            <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
+                                <HyperlinkButton Content="{x:Bind WinAppSdkRuntimeDetails}" NavigateUri="https://aka.ms/windowsappsdk" />
+                                <HyperlinkButton Content="WinUI 3" NavigateUri="https://aka.ms/winui" />
+                                <HyperlinkButton Content="Windows Community Toolkit" NavigateUri="https://aka.ms/toolkit/windows" />
+                                <HyperlinkButton Content="ektrah / nsec" NavigateUri="https://github.com/ektrah/nsec" />
+                                <HyperlinkButton Content="mono / SkiaSharp" NavigateUri="https://github.com/mono/SkiaSharp" />
+                            </StackPanel>
+                        </toolkit:SettingsCard>
+
+                        <toolkit:SettingsCard
+                            HorizontalContentAlignment="Left"
+                            ContentAlignment="Vertical"
+                            Header="THIS CODE AND INFORMATION IS PROVIDED ‘AS IS’ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.">
+                            <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
+                                <HyperlinkButton Content="Microsoft Services Agreement" NavigateUri="https://go.microsoft.com/fwlink/?LinkId=822631" />
+                                <HyperlinkButton Content="Microsoft Privacy Statement" NavigateUri="https://go.microsoft.com/fwlink/?LinkId=521839" />
+                            </StackPanel>
+                        </toolkit:SettingsCard>
+                    </toolkit:SettingsExpander.Items>
+
+                </toolkit:SettingsExpander>
+            </StackPanel>
+        </ScrollView>
+    </Grid>
+</Page>
