@@ -47,7 +47,7 @@
                 <toolkit:SettingsExpander 
                     Margin="0,0,0,24"
                     Header="{x:Bind AppTitleName}"
-                    Description="© 2025 Zeke Zhang. All rights reserved.">
+                    Description="© 2025 ZKLAB. All rights reserved.">
                     <toolkit:SettingsExpander.HeaderIcon>
                         <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/StoreLogo.scale-400.png"/>
                     </toolkit:SettingsExpander.HeaderIcon>

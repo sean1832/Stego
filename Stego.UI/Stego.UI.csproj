@@ -11,10 +11,10 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
-    <Configurations>Debug;Release;Release-Unpackaged</Configurations>
+    <Configurations>Debug;Release;Release-Packaged</Configurations>
 
-    <WindowsPackageType Condition="'$(Configuration)' == 'Release-Unpackaged'">None</WindowsPackageType>
-    <WindowsAppSDKSelfContained Condition="'$(Configuration)' == 'Release-Unpackaged'">true</WindowsAppSDKSelfContained>
+    <WindowsPackageType Condition="'$(Configuration)'!='Release-Packaged'">None</WindowsPackageType>
+    <WindowsAppSDKSelfContained Condition="'$(Configuration)'!='Release-Packaged'">true</WindowsAppSDKSelfContained>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\BadgeLogo.scale-100.png" />
