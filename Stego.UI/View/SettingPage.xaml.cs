@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using Stego.UI.Helpers;
 using System;
 using Windows.ApplicationModel;
+using Windows.System;
 using Windows.UI;
 using Microsoft.UI.Windowing;
 using WinRT.Interop;
@@ -53,19 +54,19 @@ namespace Stego.UI.View
             }
         }
 
-        private void BugRequestCard_OnClick(object sender, RoutedEventArgs e)
+        private async void BugRequestCard_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/sean1832/Stego/issues"));
         }
 
-        private void RepoCard_OnClick(object sender, RoutedEventArgs e)
+        private async void RepoCard_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/sean1832/Stego"));
         }
 
-        private void DonationCard_OnClick(object sender, RoutedEventArgs e)
+        private async void DonationCard_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            await Launcher.LaunchUriAsync(new Uri("https://buymeacoffee.com/zekezhang"));
         }
 
         private void ThemeMode_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
