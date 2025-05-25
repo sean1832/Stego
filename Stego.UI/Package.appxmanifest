@@ -9,7 +9,7 @@
 
   <Identity
     Name="ZKLAB.1003864523FE2"
-    Publisher="CN=3FA2F1CE-D2F9-4124-B143-F7B030B8E446"
+    Publisher="CN=ZKLAB"
     Version="0.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="d08c0b2e-ff85-4150-8152-02995182108b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
