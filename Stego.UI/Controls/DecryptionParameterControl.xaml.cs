@@ -46,7 +46,7 @@ namespace Stego.UI.Controls
                 switch (_vm.InputType)
                 {
                     case InputDataType.GenericFile:
-                        if (_vm.Data.Length >= 524288)
+                        if (_vm.TextBoxData == null || _vm.TextBoxData.Length >= 524288)
                         {
                             dialog.PrimaryButtonText = "Decrypt As File";
                             dialog.PrimaryButtonClick += async (s, args) => await HandleDecryptionClickAsync(dialog, prompt, args,false, SaveDecryptedFile);
@@ -101,12 +101,17 @@ namespace Stego.UI.Controls
 
             prompt.ShowSpinner();
 
-            byte[] data = _vm.Data;
+            byte[] data = _vm.TextBoxData;
             if ((data == null || data.Length == 0) && string.IsNullOrEmpty(_vm.InputFilePath))
             {
                 prompt.HideSpinner();
                 prompt.ShowError("No data to decrypt. Please provide input data or select a file.");
                 return;
+            }
+
+            if (_vm.TextBoxData == null && !string.IsNullOrEmpty(_vm.InputFilePath))
+            {
+                data = await File.ReadAllBytesAsync(_vm.InputFilePath);
             }
 
             try
@@ -132,7 +137,7 @@ namespace Stego.UI.Controls
                 {
                     // clear data after decryption attempt
                     Array.Clear(data, 0, data.Length);
-                    _vm.Data = null;
+                    _vm.TextBoxData = null;
                 }
                 
                 if (decrypted == null)

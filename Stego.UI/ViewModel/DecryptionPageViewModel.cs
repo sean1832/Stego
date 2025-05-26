@@ -36,16 +36,16 @@ namespace Stego.UI.ViewModel
             }
         }
 
-        // Data to be decrypted
-        private byte[]? _data;
-        public byte[]? Data
+        // TextBoxData to be decrypted
+        private byte[]? _textBoxData;
+        public byte[]? TextBoxData
         {
-            get => _data;
+            get => _textBoxData;
             set
             {
-                if (_data == value) return;
-                _data = value;
-                OnPropertyChanged(nameof(Data));
+                if (_textBoxData == value) return;
+                _textBoxData = value;
+                OnPropertyChanged(nameof(TextBoxData));
             }
         }
 

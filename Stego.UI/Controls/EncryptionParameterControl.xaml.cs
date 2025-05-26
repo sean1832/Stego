@@ -62,7 +62,7 @@ public sealed partial class EncryptionParameterControl : UserControl
                 dialog.PrimaryButtonText = "Encrypt As Image";
                 dialog.PrimaryButtonClick += async (s, args) => await HandleEncryptClickAsync(dialog, prompt, args, SaveSteganographyFile);
             }
-            else if (_vm.InputType != InputDataType.String && (_vm.Data != null) && (_vm.Data.Length >= 524288)) 
+            else if (_vm.InputType != InputDataType.String && (_vm.TextBoxData != null) && (_vm.TextBoxData.Length >= 524288)) 
             {
                 // if size larger than 0.5MB &&
                 // if input type is file, swap primary button to "Encrypt As File", disable secondary button
@@ -108,7 +108,7 @@ public sealed partial class EncryptionParameterControl : UserControl
 
         // run encryption
         prompt.ShowSpinner();
-        byte[] dataToEncrypt = _vm.Data;
+        byte[] dataToEncrypt = _vm.TextBoxData;
         if (_vm.InputType != InputDataType.String)
         {
             if (string.IsNullOrEmpty(_vm.InputFilePath))
@@ -139,7 +139,7 @@ public sealed partial class EncryptionParameterControl : UserControl
         finally
         {
             Array.Clear(dataToEncrypt, 0, dataToEncrypt.Length);
-            _vm.Data = null; // clear the data in ViewModel to free memory
+            _vm.TextBoxData = null; // clear the data in ViewModel to free memory
         }
 
 

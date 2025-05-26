@@ -54,7 +54,7 @@ namespace Stego.UI.Controls
                     break;
                 case "File":
                     _vm.InputType = InputDataType.GenericFile;
-                    _vm.Data = null;
+                    _vm.TextBoxData = null;
                     InputBox.Visibility = Visibility.Collapsed;
                     FileSelector.Visibility = Visibility.Visible;
                     break;
@@ -101,13 +101,13 @@ namespace Stego.UI.Controls
             byte[]? data = GetInputBoxBytes(InputBox);
             if (data == null)
             {
-                // No data entered, clear the Data property
-                _vm.Data = null;
+                // No data entered, clear the TextBoxData property
+                _vm.TextBoxData = null;
                 return;
             }
 
             _vm.InputType = InputDataType.String;
-            _vm.Data = data;
+            _vm.TextBoxData = data;
         }
 
         private static byte[]? GetInputBoxBytes(RichEditBox textBox)

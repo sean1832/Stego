@@ -44,7 +44,7 @@ namespace Stego.UI.Controls
                     break;
                 case "File":
                     _vm.InputType = InputDataType.GenericFile;
-                    _vm.Data = null;
+                    _vm.TextBoxData = null;
                     TextInputPanel.Visibility = Visibility.Collapsed;
                     FileSelectorControl.Visibility = Visibility.Visible;
                     break;
@@ -63,7 +63,7 @@ namespace Stego.UI.Controls
             if (data == null)
             {
                 // No data entered, clear the Data property
-                _vm.Data = null;
+                _vm.TextBoxData = null;
                 DataSizeTextBlock.Text = "0 bytes";
                 return;
             }
@@ -74,8 +74,8 @@ namespace Stego.UI.Controls
             }
 
             _vm.InputType = InputDataType.String;
-            _vm.Data = data;
-            DataSizeTextBlock.Text = $"{DataPacker.PredictTotalBytes(_vm.Data)} bytes";
+            _vm.TextBoxData = data;
+            DataSizeTextBlock.Text = $"{DataPacker.PredictTotalBytes(_vm.TextBoxData)} bytes";
         }
 
         private static byte[]? GetInputBoxBytes(RichEditBox textBox)
@@ -98,7 +98,7 @@ namespace Stego.UI.Controls
                 byte[]? data = GetInputBoxBytes(InputBox);
                 if (data == null) return;
 
-                _vm.Data = Compression.CompressGz(data);
+                _vm.TextBoxData = Compression.CompressGz(data);
             }
             else
             {
@@ -107,10 +107,10 @@ namespace Stego.UI.Controls
                 byte[]? data = GetInputBoxBytes(InputBox);
                 if (data == null) return;
 
-                _vm.Data = data;
+                _vm.TextBoxData = data;
             }
 
-            DataSizeTextBlock.Text = $"{DataPacker.PredictTotalBytes(_vm.Data)} bytes";
+            DataSizeTextBlock.Text = $"{DataPacker.PredictTotalBytes(_vm.TextBoxData)} bytes";
         }
 
         private void StatusBox_OnActionButtonClick(TeachingTip sender, object args)
@@ -143,7 +143,7 @@ namespace Stego.UI.Controls
             if (_vm == null) return;
             if (string.IsNullOrEmpty(e))
             {
-                _vm.Data = null;
+                _vm.TextBoxData = null;
                 _vm.InputFilePath = null;
                 return;
             }
