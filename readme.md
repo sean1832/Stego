@@ -24,6 +24,7 @@
 ## Planned Features
 - [ ] Support for JPEG images (using DCT)
 - [ ] Support for lossless audio formats (WAV, FLAC)
+- [ ] Drag and drop support for files
 
 
 ## Requirements
