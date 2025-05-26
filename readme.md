@@ -8,11 +8,6 @@
 <p align="center">
 <img src="docs/images/app-screenshot-light.png" alt="WinUI 3 Gallery" width="500"/>
 </p>
-<p align="center">
-<a href="">
-	<img alt="Store badge" src="docs/images/storeBadge.png" width="200"/>
-</a>
-</p>
 
 
 ## ⭐ Features
@@ -31,5 +26,5 @@
 - Windows 10 or later
 
 ## Installation
-> Not yet available, but you can build the project from source.
+You can download the latest release of StegoUI from the [Releases page](https://github.com/sean1832/stego/releases/latest).
 
