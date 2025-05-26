@@ -27,12 +27,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C42311B6D1A2444EB8C9CD382161E08A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_C917F963419F4ED3A9AE6550221CF5F8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -40,6 +34,12 @@
         "Entry"
         {
         "MsmKey" = "8:_D452F268AF7D485484D75258F6F1C929"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F9F6053A56AA4224A9189E02B7A89652"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -61,13 +61,21 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\Stego.Setup.msi"
+        "OutputFilename" = "8:Release\\StegoUI-x64.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -77,6 +85,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -256,7 +280,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:StegoUI"
         "ProductCode" = "8:{989DB724-1BE4-4417-BD55-762F33ED9BD9}"
-        "PackageCode" = "8:{7027DBCD-5AD5-483F-827F-E17078E65778}"
+        "PackageCode" = "8:{4A4819AA-44C2-4B39-AD05-DA71B55572D7}"
         "UpgradeCode" = "8:{C075C400-FB06-44CE-AB37-CA7CD8DA1F63}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -376,7 +400,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7F51E22112254BFC9175F0D3DC80514D"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_05A9E36F22E74CC7ACF121A831FFDFD4"
             {
             "Name" = "8:StegoUI"
             "Arguments" = "8:"
@@ -384,13 +408,13 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_C42311B6D1A2444EB8C9CD382161E08A"
+            "Target" = "8:_F9F6053A56AA4224A9189E02B7A89652"
             "Folder" = "8:_82DD20A5AB704DFBAF595D3510B598A1"
             "WorkingFolder" = "8:_2652A1F4E81741EFA96E2AFC99E9A80F"
             "Icon" = "8:_AE712604343244CD905F6C835B6B2CF6"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_E353F3F5CACE48C194A7F69916BC5969"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_EB671FAF6A184D46A0F1892040590A49"
             {
             "Name" = "8:StegoUI"
             "Arguments" = "8:"
@@ -398,22 +422,22 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_C42311B6D1A2444EB8C9CD382161E08A"
-            "Folder" = "8:_B0F7328C538F4279848DDCD48B96439F"
+            "Target" = "8:_F9F6053A56AA4224A9189E02B7A89652"
+            "Folder" = "8:_F40DE2B1595C435A881A262B59485925"
             "WorkingFolder" = "8:_2652A1F4E81741EFA96E2AFC99E9A80F"
             "Icon" = "8:_AE712604343244CD905F6C835B6B2CF6"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F3752527C5EF4BEDA697B16228B83E78"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F2EF131D3465496E80B39D51E8EA656A"
             {
-            "Name" = "8:StegoUI"
+            "Name" = "8:StegoUi"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_C42311B6D1A2444EB8C9CD382161E08A"
-            "Folder" = "8:_F40DE2B1595C435A881A262B59485925"
+            "Target" = "8:_F9F6053A56AA4224A9189E02B7A89652"
+            "Folder" = "8:_B0F7328C538F4279848DDCD48B96439F"
             "WorkingFolder" = "8:_2652A1F4E81741EFA96E2AFC99E9A80F"
             "Icon" = "8:_AE712604343244CD905F6C835B6B2CF6"
             "Feature" = "8:"
@@ -817,7 +841,35 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C42311B6D1A2444EB8C9CD382161E08A"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2EB0CF298A9344309ADB6776F8ECC15A"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2652A1F4E81741EFA96E2AFC99E9A80F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:Release-Unpackaged|x64"
+            "OutputGroupCanonicalName" = "8:ContentFiles"
+            "OutputProjectGuid" = "8:{A3638BCB-3EFE-4171-B84B-4341FB5136D6}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_F9F6053A56AA4224A9189E02B7A89652"
             {
             "SourcePath" = "8:..\\Stego.UI\\obj\\x64\\Release-Unpackaged\\net8.0-windows10.0.19041.0\\win-x64\\apphost.exe"
             "TargetName" = "8:"

@@ -186,6 +186,13 @@
     <AssemblyVersion>0.0.1</AssemblyVersion>
     <PackageCertificateKeyFile>Stego.UI_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Unpackaged|x64'">
+    <Optimize>True</Optimize>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
   <ItemGroup>
     <PRIResource Remove="DataModel\**" />
   </ItemGroup>
