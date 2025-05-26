@@ -47,7 +47,7 @@
                 <toolkit:SettingsExpander 
                     Margin="0,0,0,24"
                     Header="{x:Bind AppTitleName}"
-                    Description="© 2025 Zeke Zhang. All rights reserved.">
+                    Description="© 2025 ZKLAB. All rights reserved.">
                     <toolkit:SettingsExpander.HeaderIcon>
                         <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/StoreLogo.scale-400.png"/>
                     </toolkit:SettingsExpander.HeaderIcon>
@@ -104,10 +104,9 @@
                         <toolkit:SettingsCard
                             HorizontalContentAlignment="Left"
                             ContentAlignment="Vertical"
-                            Header="THIS CODE AND INFORMATION IS PROVIDED ‘AS IS’ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.">
+                            Header="STEGOUI DOES NOT AND WILL NOT COLLECT, TRANSMIT, OR STORE ANY PERSONAL DATA. ALL ENCRYPTION AND DECRYPTION HAPPENS LOCALLY, ON THE USER’S DEVICE.">
                             <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
-                                <HyperlinkButton Content="Microsoft Services Agreement" NavigateUri="https://go.microsoft.com/fwlink/?LinkId=822631" />
-                                <HyperlinkButton Content="Microsoft Privacy Statement" NavigateUri="https://go.microsoft.com/fwlink/?LinkId=521839" />
+                                <HyperlinkButton Content="StegoUI Privacy Statement" NavigateUri="https://github.com/sean1832/Stego/blob/main/privacy.md" />
                             </StackPanel>
                         </toolkit:SettingsCard>
                     </toolkit:SettingsExpander.Items>
