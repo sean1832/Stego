@@ -34,6 +34,9 @@ namespace Stego.UI.Controls
 
         private void InputTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (_vm == null)
+                throw new InvalidOperationException("ViewModel is not set.");
+
             switch (InputTypeComboBox.SelectedItem)
             {
                 case "String":

@@ -44,6 +44,9 @@ namespace Stego.UI.Controls
 
         private void InputTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (_vm == null)
+                throw new InvalidOperationException("View Model null.");
+
             switch (InputTypeComboBox.SelectedItem)
             {
                 case "String":

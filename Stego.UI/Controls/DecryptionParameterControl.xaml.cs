@@ -89,6 +89,9 @@ namespace Stego.UI.Controls
             bool isSteganographyFile,
             Func<byte[], Task> onSuccess)
         {
+            if (_vm == null)
+                throw new InvalidOperationException("ViewModel is not set.");
+
             args.Cancel = true;
 
             // validation
@@ -101,7 +104,7 @@ namespace Stego.UI.Controls
 
             prompt.ShowSpinner();
 
-            byte[] data = _vm.TextBoxData;
+            byte[]? data = _vm.TextBoxData;
             if ((data == null || data.Length == 0) && string.IsNullOrEmpty(_vm.InputFilePath))
             {
                 prompt.HideSpinner();
@@ -162,7 +165,7 @@ namespace Stego.UI.Controls
                     Array.Clear(decrypted, 0, decrypted.Length);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Fail();
             }

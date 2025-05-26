@@ -45,7 +45,7 @@ namespace Stego.UI.View
         private struct POINT { public int X; public int Y; }
 
 
-        public string Message { get; set; }
+        public string? Message { get; set; }
         public MessageBoxWindow()
         {
             InitializeComponent();

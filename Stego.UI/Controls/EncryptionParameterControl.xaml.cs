@@ -92,6 +92,9 @@ public sealed partial class EncryptionParameterControl : UserControl
         ContentDialogButtonClickEventArgs args,
         Action<byte[]> onSuccess)
     {
+        if (_vm == null)
+            throw new InvalidOperationException("ViewModel is not set.");
+
         args.Cancel = true;
 
         // validation
@@ -108,7 +111,7 @@ public sealed partial class EncryptionParameterControl : UserControl
 
         // run encryption
         prompt.ShowSpinner();
-        byte[] dataToEncrypt = _vm.TextBoxData;
+        byte[]? dataToEncrypt = _vm.TextBoxData;
         if (_vm.InputType != InputDataType.String)
         {
             if (string.IsNullOrEmpty(_vm.InputFilePath))
@@ -152,6 +155,11 @@ public sealed partial class EncryptionParameterControl : UserControl
     {
         try
         {
+            if ((_vm == null) || string.IsNullOrEmpty(_vm.SteganographyViewModel.CoverImagePath))
+            {
+                throw new InvalidDataException("View model is null or Steganography cover image path isn't set");
+            }
+
             var opts = new FileSelectorSaveOptions
             {
                 FileTypeChoices =

@@ -63,7 +63,7 @@ namespace Stego.UI.Helpers
             string title,
             Func<Task> work)
         {
-            await ShowWhileAsync<object>(host, title, async () => {
+            await ShowWhileAsync<object?>(host, title, async () => {
                 await work();
                 return null;
             });
