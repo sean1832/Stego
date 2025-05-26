@@ -125,10 +125,10 @@ public sealed partial class EncryptionParameterControl : UserControl
             return;
         }
 
-        byte[] data;
+        byte[] encryptedData;
         try
         {
-            data = await EncryptAsync(prompt.Password, dataToEncrypt);
+            encryptedData = await EncryptAsync(prompt.Password, dataToEncrypt);
         }
         catch (Exception e)
         {
@@ -145,7 +145,7 @@ public sealed partial class EncryptionParameterControl : UserControl
 
         // done
         dialog.Hide();
-        onSuccess(data);
+        onSuccess(encryptedData);
     }
 
     private async void SaveSteganographyFile(byte[] encryptedData)

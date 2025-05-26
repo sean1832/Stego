@@ -119,6 +119,8 @@ namespace Stego.UI.Controls
                 // decode steganography if needed
                 if (isSteganographyFile)
                 {
+                    if (string.IsNullOrEmpty(_vm.InputFilePath))
+                        throw new InvalidDataException($"{nameof(_vm.InputFilePath)} is not set.");
                     data = await SteganographyLsb.DecodeAsync(_vm.InputFilePath, (int)SpacingSlider.Value, (short)LsbControl.LsbCount);
                 }
 
