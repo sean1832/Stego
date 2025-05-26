@@ -30,15 +30,18 @@ namespace Stego.Core
 
             Argon2id kdf = PasswordBasedKeyDerivationAlgorithm.Argon2id(param);
             Aes256Gcm aes = new Aes256Gcm();
-            Key key = kdf.DeriveKey(
+
+            // dispose key after use
+            using (Key key = kdf.DeriveKey(
                 password,
                 new ReadOnlySpan<byte>(salt),
                 aes
-            );
-
-            // encrypt content using the key
-            byte[] encryptedRawData = aes.Encrypt(key, new ReadOnlySpan<byte>(nonce), null, data);
-            return DataPacker.PackAll(salt, nonce, param, encryptedRawData);
+            ))
+            {
+                // encrypt content using the key
+                byte[] encryptedRawData = aes.Encrypt(key, new ReadOnlySpan<byte>(nonce), null, data);
+                return DataPacker.PackAll(salt, nonce, param, encryptedRawData);
+            }
         }
         public static Task<byte[]> EncryptAes256GcmAsync(ReadOnlyMemory<byte> passwordMemory,
             ReadOnlyMemory<byte> dataMemory, Argon2Parameters param)
@@ -56,7 +59,9 @@ namespace Stego.Core
                 NumberOfPasses = envelope.Iterations
             });
             Aes256Gcm aes = new Aes256Gcm();
-            Key key = kdf.DeriveKey(
+
+            // dispose key after use
+            using Key key = kdf.DeriveKey(
                 password,
                 new ReadOnlySpan<byte>(envelope.Salt),
                 aes

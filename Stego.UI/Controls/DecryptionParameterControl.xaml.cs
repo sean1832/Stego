@@ -123,17 +123,37 @@ namespace Stego.UI.Controls
                 }
 
                 // decrypt
-                var decrypted = await DecryptAsync(prompt.Password, data);
+                byte[]? decrypted;
+                try
+                {
+                    decrypted = await DecryptAsync(prompt.Password, data);
+                }
+                finally
+                {
+                    // clear data after decryption attempt
+                    Array.Clear(data, 0, data.Length);
+                    _vm.Data = null;
+                }
+                
                 if (decrypted == null)
                 {
                     throw new InvalidDataException("Decrypted data is null. Likely failed to decrypt.");
                 }
-                // gzip
-                if (Compression.IsCompressedGz(decrypted))
-                    decrypted = await Compression.DecompressGzAsync(decrypted);
 
-                dialog.Hide();
-                onSuccess(decrypted);
+                try
+                {
+                    // gzip
+                    if (Compression.IsCompressedGz(decrypted))
+                        decrypted = await Compression.DecompressGzAsync(decrypted);
+
+                    dialog.Hide();
+                    onSuccess(decrypted);
+                }
+                finally
+                {
+                    // clear data after decryption attempt
+                    Array.Clear(decrypted, 0, decrypted.Length);
+                }
             }
             catch (Exception ex)
             {
@@ -223,15 +243,21 @@ namespace Stego.UI.Controls
         private async Task<byte[]?> DecryptAsync(string password, byte[] data)
         {
             if (_vm == null) throw new InvalidOperationException("ViewModel is not set.");
+
+            byte[] pwBytes = Encoding.UTF8.GetBytes(password);
             try
             {
-                return await Cipher.DecryptAes256GcmAsync(Encoding.UTF8.GetBytes(password), data);
+                return await Cipher.DecryptAes256GcmAsync(pwBytes, data);
             }
             catch (Exception ex)
             {
                 // Handle the exception (e.g., show a message to the user)
                 MessageBox.Error($"Decryption Failed: {ex.Message}");
                 return null;
+            }
+            finally
+            {
+                Array.Clear(pwBytes, 0, pwBytes.Length);
             }
         }
 

@@ -136,6 +136,11 @@ public sealed partial class EncryptionParameterControl : UserControl
             prompt.ShowError($"Encryption failed: {e.Message}");
             return;
         }
+        finally
+        {
+            Array.Clear(dataToEncrypt, 0, dataToEncrypt.Length);
+            _vm.Data = null; // clear the data in ViewModel to free memory
+        }
 
 
         // done
@@ -257,7 +262,16 @@ public sealed partial class EncryptionParameterControl : UserControl
     {
         // run the slow work off the UI thread
         byte[] pwBytes = Encoding.UTF8.GetBytes(password);
-        return await Cipher.EncryptAes256GcmAsync(pwBytes, data, Argon2Param);
+        try
+        {
+            return await Cipher.EncryptAes256GcmAsync(pwBytes, data, Argon2Param);
+        }
+        finally
+        {
+            // clear sensitive data
+            Array.Clear(pwBytes, 0, pwBytes.Length);
+            Array.Clear(data, 0, data.Length); 
+        }
     }
 
     private void SpacingSlider_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
