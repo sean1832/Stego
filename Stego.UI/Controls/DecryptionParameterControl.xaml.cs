@@ -175,7 +175,7 @@ namespace Stego.UI.Controls
                 OutputPromptContent outputPrompt = new OutputPromptContent();
                 ContentDialog outputDialog = new ContentDialog
                 {
-                    Title = "Encrypted Data",
+                    Title = "Decrypted Data",
                     PrimaryButtonText = "Copy to Clipboard",
                     CloseButtonText = "Close",
                     DefaultButton = ContentDialogButton.Primary,
