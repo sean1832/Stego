@@ -5,10 +5,7 @@
 
 > A simple steganography UI tool build with WinUI 3 to hide data in images using LSB (Least Significant Bit) technique.
 
-<p align="center">
-<img src="docs/images/app-screenshot-light.png" alt="WinUI 3 Gallery" width="500"/>
-</p>
-
+https://github.com/user-attachments/assets/f816f11c-f6e2-495c-899c-cc64c209a62a
 
 ## ⭐ Features
 - Hide/Extract data in images using LSB technique
