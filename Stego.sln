@@ -22,6 +22,7 @@ Global
 		{A3638BCB-3EFE-4171-B84B-4341FB5136D6}.Release|x64.Deploy.0 = Release|x64
 		{A3638BCB-3EFE-4171-B84B-4341FB5136D6}.Release-Unpackaged|x64.ActiveCfg = Release-Unpackaged|x64
 		{A3638BCB-3EFE-4171-B84B-4341FB5136D6}.Release-Unpackaged|x64.Build.0 = Release-Unpackaged|x64
+		{A3638BCB-3EFE-4171-B84B-4341FB5136D6}.Release-Unpackaged|x64.Deploy.0 = Release-Unpackaged|x64
 		{467FDFF2-0578-4079-8793-103D9688BE48}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{467FDFF2-0578-4079-8793-103D9688BE48}.Debug|x64.Build.0 = Debug|Any CPU
 		{467FDFF2-0578-4079-8793-103D9688BE48}.Release|x64.ActiveCfg = Release|Any CPU
