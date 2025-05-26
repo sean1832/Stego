@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stego.UI", "Stego.UI\Stego.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stego.Core", "Stego.Core\Stego.Core.csproj", "{467FDFF2-0578-4079-8793-103D9688BE48}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Stego.Setup", "Stego.Setup\Stego.Setup.vdproj", "{D3DDB226-DBDB-D56A-902F-699B09D401FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -29,6 +31,9 @@ Global
 		{467FDFF2-0578-4079-8793-103D9688BE48}.Release|x64.Build.0 = Release|Any CPU
 		{467FDFF2-0578-4079-8793-103D9688BE48}.Release-Unpackaged|x64.ActiveCfg = Release-Unpackaged|Any CPU
 		{467FDFF2-0578-4079-8793-103D9688BE48}.Release-Unpackaged|x64.Build.0 = Release-Unpackaged|Any CPU
+		{D3DDB226-DBDB-D56A-902F-699B09D401FE}.Debug|x64.ActiveCfg = Debug
+		{D3DDB226-DBDB-D56A-902F-699B09D401FE}.Release|x64.ActiveCfg = Release
+		{D3DDB226-DBDB-D56A-902F-699B09D401FE}.Release-Unpackaged|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
