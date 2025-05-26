@@ -16,11 +16,13 @@
 
 
 ## ⭐ Features
-- Hide data in images using LSB technique
-- Extract hidden data from images
+- Hide/Extract data in images using LSB technique
+- Adjustable LSB bits per byte (1-8 bits)
+- Adjustable LSB spacing between bytes
 - Supports lossless image formats (PNG, BMP)
+- Encrypt/Decrypt data before hiding it in images
 - User-friendly interface
-- Encryption/Decryption without steganography should user want to use it
+- Encryption/Decryption without steganography should user choose so
 - Argon2id password hashing for security
 - System theme support (light/dark mode)
 
