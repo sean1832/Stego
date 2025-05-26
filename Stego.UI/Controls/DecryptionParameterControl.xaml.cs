@@ -87,7 +87,7 @@ namespace Stego.UI.Controls
             PasswordPromptContent prompt,
             ContentDialogButtonClickEventArgs args,
             bool isSteganographyFile,
-            Action<byte[]> onSuccess)
+            Func<byte[], Task> onSuccess)
         {
             args.Cancel = true;
 
@@ -154,7 +154,7 @@ namespace Stego.UI.Controls
                         decrypted = await Compression.DecompressGzAsync(decrypted);
 
                     dialog.Hide();
-                    onSuccess(decrypted);
+                    await onSuccess(decrypted);
                 }
                 finally
                 {
@@ -175,7 +175,7 @@ namespace Stego.UI.Controls
             }
         }
 
-        private async void ShowTextOutputDialog(byte[] decryptedData)
+        private async Task ShowTextOutputDialog(byte[] decryptedData)
         {
             try
             {
@@ -206,7 +206,7 @@ namespace Stego.UI.Controls
             }
         }
 
-        private async void SaveDecryptedFile(byte[] decryptedData)
+        private async Task SaveDecryptedFile(byte[] decryptedData)
         {
             try
             {
