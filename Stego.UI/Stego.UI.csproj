@@ -11,11 +11,17 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
-    <Configurations>Debug;Release;Release-Packaged</Configurations>
+    <Configurations>Debug;Release;Release-Unpackaged</Configurations>
 
-    <WindowsPackageType Condition="'$(Configuration)'!='Release-Packaged'">None</WindowsPackageType>
-    <WindowsAppSDKSelfContained Condition="'$(Configuration)'!='Release-Packaged'">true</WindowsAppSDKSelfContained>
+    <WindowsPackageType Condition="'$(Configuration)' == 'Release-Unpackaged'">None</WindowsPackageType>
+    <WindowsAppSDKSelfContained Condition="'$(Configuration)' == 'Release-Unpackaged'">true</WindowsAppSDKSelfContained>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="DataModel\**" />
+    <EmbeddedResource Remove="DataModel\**" />
+    <None Remove="DataModel\**" />
+    <Page Remove="DataModel\**" />
+  </ItemGroup>
   <ItemGroup>
     <Content Remove="Assets\BadgeLogo.scale-100.png" />
     <Content Remove="Assets\BadgeLogo.scale-125.png" />
@@ -138,9 +144,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataModel\" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="View\SettingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,4 +186,7 @@
     <FileVersion>0.0.1</FileVersion>
     <AssemblyVersion>0.0.1</AssemblyVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <PRIResource Remove="DataModel\**" />
+  </ItemGroup>
 </Project>

@@ -5,14 +5,15 @@
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap rescap">
+  xmlns:uap18="http://schemas.microsoft.com/appx/manifest/uap/windows10/18"
+  IgnorableNamespaces="uap rescap uap18">
 
   <Identity
     Name="ZKLAB.1003864523FE2"
-    Publisher="CN=ZKLAB"
+    Publisher="CN=3FA2F1CE-D2F9-4124-B143-F7B030B8E446"
     Version="0.0.1.0" />
 
-  <mp:PhoneIdentity PhoneProductId="d08c0b2e-ff85-4150-8152-02995182108b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="7faea787-2a46-4346-b692-dcd0c4dfbd37" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>StegoUI</DisplayName>
@@ -32,16 +33,18 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="$targetentrypoint$">
+      EntryPoint="$targetentrypoint$" uap18:RuntimeBehavior="windowsApp" uap18:TrustLevel="appContainer">
       <uap:VisualElements
         DisplayName="StegoUI"
-        Description="Stego.UI"
+        Description="A simple steganography UI tool build with WinUI 3 to hide data in images using LSB (Least Significant Bit) technique."
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"  Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
         <uap:LockScreen BadgeLogo="Assets\BadgeLogo.png" Notification="badge"/>
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>

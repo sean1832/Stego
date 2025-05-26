@@ -7,7 +7,7 @@
     <Version>0.0.1</Version>
     <FileVersion>0.0.1</FileVersion>
     <AssemblyVersion>0.0.1</AssemblyVersion>
-    <Configurations>Debug;Release;Release-Packaged</Configurations>
+    <Configurations>Debug;Release;Release-Unpackaged</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
