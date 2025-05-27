@@ -288,7 +288,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:StegoUI"
         "ProductCode" = "8:{31454283-65FC-4626-BCFB-371731A7FEEF}"
-        "PackageCode" = "8:{FDD61EB8-34F6-4D88-8166-EEE075501D49}"
+        "PackageCode" = "8:{E78AAC03-844F-47CF-8D76-E5FC3F5769A8}"
         "UpgradeCode" = "8:{C075C400-FB06-44CE-AB37-CA7CD8DA1F63}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -438,7 +438,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F2EF131D3465496E80B39D51E8EA656A"
             {
-            "Name" = "8:StegoUi"
+            "Name" = "8:StegoUI"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
