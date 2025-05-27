@@ -88,7 +88,7 @@
                  Message="Current version is in beta and things might break. If you encounter any bug, please don't hesitate to submit an issue on GitHub.">
             <InfoBar.ActionButton>
                 <HyperlinkButton Content="GitHub Issue Page"
-                                 NavigateUri="https://github.com/sean1832/stego" />
+                                 NavigateUri="https://github.com/sean1832/stego/issues" />
             </InfoBar.ActionButton>
         </InfoBar>
     </Grid>
