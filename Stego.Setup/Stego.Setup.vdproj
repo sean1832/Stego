@@ -68,6 +68,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -280,7 +288,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:StegoUI"
         "ProductCode" = "8:{989DB724-1BE4-4417-BD55-762F33ED9BD9}"
-        "PackageCode" = "8:{4A4819AA-44C2-4B39-AD05-DA71B55572D7}"
+        "PackageCode" = "8:{598563F6-BD7B-4FCE-A49A-3AFB0308C6F6}"
         "UpgradeCode" = "8:{C075C400-FB06-44CE-AB37-CA7CD8DA1F63}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -303,7 +311,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:"
+        "PostBuildEvent" = "8:@echo off\r\nsetlocal\r\n\r\nREM — 1) pull the FileVersion (no +hash) from your main app exe\r\nfor /f \"usebackq delims=\" %%V in (`\r\n  powershell -NoProfile -Command \r\n    \"(Get-Item '$(ProjectDir)..\\Stego.UI\\bin\\x64\\Release-Unpackaged\\net8.0-windows10.0.19041.0\\win-x64\\Stego.UI.exe').VersionInfo.FileVersion\"\r\n`) do set \"VERSION=%%V\"\r\n\r\necho Retrieved clean version: %VERSION%\r\n\r\nREM — 2) rename the MSI to include that version\r\nren \"$(BuiltOuputPath)\" \"StegoUI-%VERSION%-x64.msi\""
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"
