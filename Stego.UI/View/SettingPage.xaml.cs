@@ -19,14 +19,7 @@ namespace Stego.UI.View
     /// </summary>
     public sealed partial class SettingPage : Page
     {
-        public string Version
-        {
-            get
-            {
-                PackageVersion v = Package.Current.Id.Version;
-                return $"{v.Major}.{v.Minor}.{v.Build}";
-            }
-        }
+        public string Version => AppInfoHelper.Version;
         public string AppTitleName => AppInfoHelper.Name;
         public string WinAppSdkRuntimeDetails => AppInfoHelper.WinAppSdkRuntimeDetails;
 
